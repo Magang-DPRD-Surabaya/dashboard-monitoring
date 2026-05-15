@@ -7,6 +7,7 @@ use App\Http\Controllers\MitraKerjaController;
 use App\Http\Controllers\TahunAnggaranController;
 use App\Http\Controllers\StatusCapaianController;
 use App\Http\Controllers\KondisiLingkunganController;
+use App\Http\Controllers\PendapatanController;
 
 
 Route::get('/', function () {
@@ -41,6 +42,10 @@ Route::resource('status-capaian', StatusCapaianController::class)
 
 // Route CRUD Kondisi Lingkungan
 Route::resource('kondisi-lingkungan', KondisiLingkunganController::class)
+    ->middleware(['auth']);
+
+// Route CRUD Pendapatan
+Route::resource('pendapatan', PendapatanController::class)
     ->middleware(['auth']);
 
 require __DIR__.'/auth.php';
