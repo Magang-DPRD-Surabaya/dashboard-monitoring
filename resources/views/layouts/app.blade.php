@@ -1,36 +1,231 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="en">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+<head>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8">
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+    <title>
+        Dashboard Monitoring Komisi B
+    </title>
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+
+        /**
+         * Sidebar
+         */
+        .sidebar {
+
+            width: 250px;
+            min-height: 100vh;
+
+            background-color: #212529;
+        }
+
+        /**
+         * Link sidebar
+         */
+        .sidebar a {
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            display: block;
+
+            padding: 12px 20px;
+        }
+
+        /**
+         * Hover menu
+         */
+        .sidebar a:hover {
+
+            background-color: #343a40;
+        }
+
+        /**
+         * Active menu
+         */
+        .sidebar .active {
+
+            background-color: #0d6efd;
+        }
+
+        /**
+         * Content kanan
+         */
+        .main-content {
+
+            flex: 1;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="d-flex">
+
+        <!-- ========================= -->
+        <!-- SIDEBAR -->
+        <!-- ========================= -->
+
+        <div class="sidebar">
+
+            <!-- Logo/Judul -->
+            <div class="p-3 text-white border-bottom">
+
+                <h4>
+                    Komisi B DPRD
+                </h4>
+
+            </div>
+
+            <!-- Menu Dashboard -->
+            <a href="/dashboard"
+               class="{{ request()->is('dashboard') ? 'active' : '' }}">
+
+                <i class="bi bi-speedometer2"></i>
+
+                Dashboard
+
+            </a>
+
+            <!-- Menu Mitra -->
+            <a href="/mitra-kerja"
+               class="{{ request()->is('mitra-kerja*') ? 'active' : '' }}">
+
+                <i class="bi bi-buildings"></i>
+
+                Mitra Kerja
+
+            </a>
+
+            <!-- Menu Tahun -->
+            <a href="/tahun-anggaran"
+               class="{{ request()->is('tahun-anggaran*') ? 'active' : '' }}">
+
+                <i class="bi bi-calendar-event"></i>
+
+                Tahun Anggaran
+
+            </a>
+
+            <!-- Menu Status -->
+            <a href="/status-capaian"
+               class="{{ request()->is('status-capaian*') ? 'active' : '' }}">
+
+                <i class="bi bi-bar-chart"></i>
+
+                Status Capaian
+
+            </a>
+
+            <!-- Menu Kondisi -->
+            <a href="/kondisi-lingkungan"
+               class="{{ request()->is('kondisi-lingkungan*') ? 'active' : '' }}">
+
+                <i class="bi bi-globe"></i>
+
+                Kondisi Lingkungan
+
+            </a>
+
+            <!-- Menu Pendapatan -->
+            <a href="/pendapatan"
+               class="{{ request()->is('pendapatan*') ? 'active' : '' }}">
+
+                <i class="bi bi-cash-stack"></i>
+
+                Pendapatan
+
+            </a>
+
         </div>
-    </body>
+
+        <!-- ========================= -->
+        <!-- CONTENT -->
+        <!-- ========================= -->
+
+        <div class="main-content">
+
+            <!-- Navbar -->
+            <nav class="navbar navbar-light bg-light border-bottom px-4">
+
+                <div class="container-fluid">
+
+                    <span class="navbar-brand mb-0 h5">
+
+                        Dashboard Monitoring Pendapatan
+
+                    </span>
+
+                    <!-- User Login -->
+                    <div class="dropdown">
+
+                        <button class="btn btn-outline-secondary dropdown-toggle"
+                                data-bs-toggle="dropdown">
+
+                            {{ auth()->user()->name }}
+
+                        </button>
+
+                        <ul class="dropdown-menu dropdown-menu-end">
+
+                            <!-- Logout -->
+                            <li>
+
+                                <form method="POST"
+                                      action="{{ route('logout') }}">
+
+                                    @csrf
+
+                                    <button type="submit"
+                                            class="dropdown-item">
+
+                                        Logout
+
+                                    </button>
+
+                                </form>
+
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </nav>
+
+            <!-- Content halaman -->
+            <div class="p-4">
+
+                {{ $slot }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
 </html>
