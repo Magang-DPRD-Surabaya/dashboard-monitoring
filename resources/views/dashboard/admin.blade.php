@@ -7,6 +7,68 @@
             Dashboard Monitoring Pendapatan
         </h2>
 
+        <!-- ========================= -->
+        <!-- FILTER TAHUN -->
+        <!-- ========================= -->
+
+        <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-body">
+
+                <form method="GET"
+                    action="{{ route('dashboard') }}">
+
+                    <div class="row align-items-end">
+
+                        <!-- Dropdown tahun -->
+                        <div class="col-md-4">
+
+                            <label class="form-label">
+                                Filter Tahun Anggaran
+                            </label>
+
+                            <select name="tahun_id"
+                                    class="form-control">
+
+                                <option value="">
+                                    Semua Tahun
+                                </option>
+
+                                @foreach($tahunList as $tahun)
+
+                                    <option value="{{ $tahun->id }}"
+                                        {{ $tahunId == $tahun->id ? 'selected' : '' }}>
+
+                                        {{ $tahun->tahun }}
+
+                                    </option>
+
+                                @endforeach
+
+                            </select>
+
+                        </div>
+
+                        <!-- Tombol filter -->
+                        <div class="col-md-2">
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+
+                                Filter
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
         <!-- Card Statistik -->
         <div class="row mb-4">
 

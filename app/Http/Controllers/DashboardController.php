@@ -5,38 +5,68 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\MitraKerja;
 use App\Models\Pendapatan;
+use App\Models\TahunAnggaran;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         /**
-         * Total mitra kerja
+         * Ambil semua tahun
+         * untuk dropdown filter
+         */
+        $tahunList = TahunAnggaran::all();
+
+        /**
+         * Ambil tahun yang dipilih
+         * dari URL
+         */
+        $tahunId = $request->tahun_id;
+
+        /**
+         * Query dasar pendapatan
+         */
+        $query = Pendapatan::query();
+
+        /**
+         * Jika tahun dipilih
+         * maka filter berdasarkan tahun
+         */
+        if ($tahunId) {
+
+            $query->where('tahun_id', $tahunId);
+        }
+
+        /**
+         * Total mitra
          */
         $totalMitra = MitraKerja::count();
 
         /**
-         * Total target pendapatan
+         * Total target
          */
-        $totalTarget = Pendapatan::sum('target');
+        $totalTarget = (clone $query)->sum('target');
 
         /**
-         * Total realisasi pendapatan
+         * Total realisasi
          */
-        $totalRealisasi = Pendapatan::sum('realisasi');
+        $totalRealisasi = (clone $query)->sum('realisasi');
 
         /**
-         * Ranking mitra berdasarkan realisasi terbesar
+         * Ranking mitra
          */
-        $rankingMitra = Pendapatan::with('mitra')
+        $rankingMitra = (clone $query)
+            ->with('mitra')
             ->orderByDesc('realisasi')
             ->take(5)
             ->get();
 
         /**
-         * Data grafik chart
+         * Data chart
          */
-        $chartData = Pendapatan::with('mitra')->get();
+        $chartData = (clone $query)
+            ->with('mitra')
+            ->get();
 
         /**
          * Dashboard admin
@@ -44,6 +74,8 @@ class DashboardController extends Controller
         if (auth()->user()->role == 'admin') {
 
             return view('dashboard.admin', compact(
+                'tahunList',
+                'tahunId',
                 'totalMitra',
                 'totalTarget',
                 'totalRealisasi',
@@ -56,6 +88,8 @@ class DashboardController extends Controller
          * Dashboard viewer
          */
         return view('dashboard.viewer', compact(
+            'tahunList',
+            'tahunId',
             'totalMitra',
             'totalTarget',
             'totalRealisasi',
