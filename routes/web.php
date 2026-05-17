@@ -10,6 +10,7 @@ use App\Http\Controllers\KondisiLingkunganController;
 use App\Http\Controllers\PendapatanController;
 use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\UserController;
 
 
 Route::get('/', function () {
@@ -84,5 +85,12 @@ Route::get('/activity-log', [ActivityLogController::class, 'index'])
 Route::get('/laporan/download', [LaporanController::class, 'download'])
     ->middleware(['auth'])
     ->name('laporan.download');
+
+/**
+ * User management
+ * hanya admin
+ */
+Route::resource('users', UserController::class)
+    ->middleware(['auth', 'role:admin']);
 
 require __DIR__.'/auth.php';

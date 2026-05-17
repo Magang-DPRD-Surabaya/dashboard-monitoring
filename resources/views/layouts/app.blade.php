@@ -166,8 +166,19 @@
                 Activity Log
 
             </a>
+
+            <!-- Menu User Management -->
+             <a href="/users"
+            class="{{ request()->is('users*') ? 'active' : '' }}">
+
+                <i class="bi bi-people"></i>
+
+                User Management
+
+            </a>
+
             @endif
-            
+
         </div>
 
         <!-- ========================= -->
