@@ -25,7 +25,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 
 // Route CRUD Mitra Kerja
 Route::resource('mitra-kerja', MitraKerjaController::class)
-    ->middleware(['auth']);
+    ->middleware(['auth', 'role:admin']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -35,23 +35,48 @@ Route::middleware('auth')->group(function () {
 
 // Route CRUD Tahun Anggaran
 Route::resource('tahun-anggaran', TahunAnggaranController::class)
-    ->middleware(['auth']);
+    ->middleware(['auth', 'role:admin']);
 
 // Route CRUD Status Capaian
 Route::resource('status-capaian', StatusCapaianController::class)
-    ->middleware(['auth']);
+    ->middleware(['auth', 'role:admin']);
 
 // Route CRUD Kondisi Lingkungan
 Route::resource('kondisi-lingkungan', KondisiLingkunganController::class)
-    ->middleware(['auth']);
+    ->middleware(['auth', 'role:admin']);
 
 // Route CRUD Pendapatan
-Route::resource('pendapatan', PendapatanController::class)
-    ->middleware(['auth']);
+/**
+ * Semua role bisa lihat data pendapatan
+ */
+Route::get('/pendapatan', [PendapatanController::class, 'index'])
+    ->middleware(['auth'])
+    ->name('pendapatan.index');
+
+/**
+ * Hanya admin yang bisa CRUD
+ */
+Route::middleware(['auth', 'role:admin'])->group(function () {
+
+    Route::get('/pendapatan/create', [PendapatanController::class, 'create'])
+        ->name('pendapatan.create');
+
+    Route::post('/pendapatan', [PendapatanController::class, 'store'])
+        ->name('pendapatan.store');
+
+    Route::get('/pendapatan/{id}/edit', [PendapatanController::class, 'edit'])
+        ->name('pendapatan.edit');
+
+    Route::put('/pendapatan/{id}', [PendapatanController::class, 'update'])
+        ->name('pendapatan.update');
+
+    Route::delete('/pendapatan/{id}', [PendapatanController::class, 'destroy'])
+        ->name('pendapatan.destroy');
+});
 
 // Route Activity Log
 Route::get('/activity-log', [ActivityLogController::class, 'index'])
-    ->middleware(['auth'])
+    ->middleware(['auth', 'role:admin'])
     ->name('activity-log.index');
 
 require __DIR__.'/auth.php';

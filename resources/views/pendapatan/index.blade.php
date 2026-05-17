@@ -7,6 +7,7 @@
             Data Pendapatan Mitra
         </h2>
 
+        @if(auth()->user()->role == 'admin')
         <!-- Tombol tambah -->
         <a href="{{ route('pendapatan.create') }}"
            class="btn btn-primary mb-3">
@@ -14,6 +15,7 @@
             Tambah Pendapatan
 
         </a>
+        @endif
 
         <!-- Alert sukses -->
         @if(session('success'))
@@ -103,6 +105,7 @@
                             {{ $item->kondisi->nama_kondisi }}
                         </td>
 
+                        @if(auth()->user()->role == 'admin')
                         <!-- Tombol aksi -->
                         <td>
 
@@ -132,7 +135,8 @@
                             </form>
 
                         </td>
-
+                        @endif
+                        
                     </tr>
 
                 @empty

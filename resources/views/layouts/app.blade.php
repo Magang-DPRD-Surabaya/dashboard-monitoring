@@ -104,6 +104,7 @@
 
             </a>
 
+            @if(auth()->user()->role == 'admin')
             <!-- Menu Mitra -->
             <a href="/mitra-kerja"
                class="{{ request()->is('mitra-kerja*') ? 'active' : '' }}">
@@ -143,6 +144,7 @@
                 Kondisi Lingkungan
 
             </a>
+            @endif
 
             <!-- Menu Pendapatan -->
             <a href="/pendapatan"
@@ -154,6 +156,7 @@
 
             </a>
 
+            @if(auth()->user()->role == 'admin')
             <!-- Menu Activity Log -->
             <a href="/activity-log"
             class="{{ request()->is('activity-log*') ? 'active' : '' }}">
@@ -163,7 +166,8 @@
                 Activity Log
 
             </a>
-
+            @endif
+            
         </div>
 
         <!-- ========================= -->
