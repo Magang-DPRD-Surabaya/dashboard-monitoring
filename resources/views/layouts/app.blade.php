@@ -154,6 +154,16 @@
 
             </a>
 
+            <!-- Menu Activity Log -->
+            <a href="/activity-log"
+            class="{{ request()->is('activity-log*') ? 'active' : '' }}">
+
+                <i class="bi bi-clock-history"></i>
+
+                Activity Log
+
+            </a>
+
         </div>
 
         <!-- ========================= -->

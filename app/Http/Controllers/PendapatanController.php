@@ -8,6 +8,7 @@ use App\Models\MitraKerja;
 use App\Models\TahunAnggaran;
 use App\Models\StatusCapaian;
 use App\Models\KondisiLingkungan;
+use App\Helpers\ActivityLogHelper;
 
 class PendapatanController extends Controller
 {
@@ -92,7 +93,7 @@ class PendapatanController extends Controller
         }
 
         // Simpan data
-        Pendapatan::create([
+        $pendapatan = Pendapatan::create([
 
             // Relasi mitra kerja
             'mitra_id' => $request->mitra_id,
@@ -119,6 +120,16 @@ class PendapatanController extends Controller
             // Catatan tambahan
             'catatan' => $request->catatan,
         ]);
+
+        /**
+         * Simpan activity log
+         */
+        ActivityLogHelper::log(
+            'create',
+            'pendapatan',
+            $pendapatan->id,
+            'Menambahkan data pendapatan baru'
+        );
 
         return redirect('/pendapatan')
             ->with('success', 'Data pendapatan berhasil ditambahkan');
@@ -212,6 +223,16 @@ class PendapatanController extends Controller
             'catatan' => $request->catatan,
         ]);
 
+        /**
+         * Simpan activity log
+         */
+        ActivityLogHelper::log(
+            'update',
+            'pendapatan',
+            $pendapatan->id,
+            'Mengupdate data pendapatan'
+        );
+
         return redirect('/pendapatan')
             ->with('success', 'Data pendapatan berhasil diupdate');
     }
@@ -223,6 +244,16 @@ class PendapatanController extends Controller
     {
         // Cari data
         $pendapatan = Pendapatan::findOrFail($id);
+
+        /**
+         * Simpan activity log
+         */
+        ActivityLogHelper::log(
+            'delete',
+            'pendapatan',
+            $pendapatan->id,
+            'Menghapus data pendapatan'
+        );
 
         // Hapus data
         $pendapatan->delete();

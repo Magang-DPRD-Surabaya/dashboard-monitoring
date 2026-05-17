@@ -8,6 +8,7 @@ use App\Http\Controllers\TahunAnggaranController;
 use App\Http\Controllers\StatusCapaianController;
 use App\Http\Controllers\KondisiLingkunganController;
 use App\Http\Controllers\PendapatanController;
+use App\Http\Controllers\ActivityLogController;
 
 
 Route::get('/', function () {
@@ -47,5 +48,10 @@ Route::resource('kondisi-lingkungan', KondisiLingkunganController::class)
 // Route CRUD Pendapatan
 Route::resource('pendapatan', PendapatanController::class)
     ->middleware(['auth']);
+
+// Route Activity Log
+Route::get('/activity-log', [ActivityLogController::class, 'index'])
+    ->middleware(['auth'])
+    ->name('activity-log.index');
 
 require __DIR__.'/auth.php';

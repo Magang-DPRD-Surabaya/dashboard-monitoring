@@ -6,17 +6,30 @@ use Illuminate\Database\Eloquent\Model;
 
 class ActivityLog extends Model
 {
+    /**
+     * Nama tabel
+     */
     protected $table = 'activity_logs';
 
-    public $timestamps = false;
-
+    /**
+     * Field yang boleh diisi
+     */
     protected $fillable = [
+
         'user_id',
-        'aktivitas',
+
+        'aksi',
+
         'tabel',
-        'data_id'
+
+        'data_id',
+
+        'deskripsi'
     ];
 
+    /**
+     * Relasi ke user
+     */
     public function user()
     {
         return $this->belongsTo(User::class);

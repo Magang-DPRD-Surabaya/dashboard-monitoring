@@ -12,19 +12,27 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('activity_logs', function (Blueprint $table) {
+
             $table->id();
 
+            // Relasi user login
             $table->foreignId('user_id')
                 ->constrained('users')
-                ->cascadeOnDelete();
+                ->onDelete('cascade');
 
-            $table->string('aktivitas');
+            // Jenis aktivitas
+            $table->string('aksi');
 
-            $table->string('tabel')->nullable();
+            // Nama tabel
+            $table->string('tabel');
 
-            $table->unsignedBigInteger('data_id')->nullable();
+            // ID data terkait
+            $table->unsignedBigInteger('data_id');
 
-            $table->timestamp('created_at')->useCurrent();
+            // Deskripsi aktivitas
+            $table->text('deskripsi');
+
+            $table->timestamps();
         });
     }
 
