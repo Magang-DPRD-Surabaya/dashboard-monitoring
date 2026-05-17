@@ -2,16 +2,59 @@
 
     <div class="container py-4">
 
-        <!-- Judul Dashboard -->
-        <h2 class="mb-4">
-            Dashboard Monitoring Pendapatan
-        </h2>
+        <!-- ========================= -->
+        <!-- HEADER DASHBOARD -->
+        <!-- ========================= -->
+
+        <div class="alert alert-primary border-0 shadow-sm rounded-4">
+
+            <i class="bi bi-info-circle-fill"></i>
+
+            Selamat datang,
+            <strong>{{ auth()->user()->name }}</strong>
+
+            di Dashboard Monitoring Pendapatan
+            Komisi B DPRD Kota Surabaya.
+
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+
+                <h2 class="fw-bold mb-1">
+
+                    Dashboard Monitoring Pendapatan
+
+                </h2>
+
+                <p class="text-muted mb-0">
+
+                    Monitoring target dan realisasi pendapatan
+                    mitra kerja Komisi B DPRD Kota Surabaya
+
+                </p>
+
+            </div>
+
+            <!-- Badge role -->
+            <div>
+
+                <span class="badge bg-primary fs-6 px-3 py-2">
+
+                    {{ strtoupper(auth()->user()->role) }}
+
+                </span>
+
+            </div>
+
+        </div>
 
         <!-- ========================= -->
         <!-- FILTER TAHUN -->
         <!-- ========================= -->
 
-        <div class="card shadow-sm border-0 mb-4">
+        <div class="card shadow-sm border-0 mb-4 rounded-4">
 
             <div class="card-body">
 
@@ -53,7 +96,9 @@
                         <div class="col-md-2">
 
                             <button type="submit"
-                                    class="btn btn-primary">
+                                    class="btn btn-primary rounded-3 px-4">
+
+                                <i class="bi bi-funnel-fill"></i>
 
                                 Filter
 
@@ -83,15 +128,35 @@
             <!-- Total Mitra -->
             <div class="col-md-4">
 
-                <div class="card shadow-sm border-0">
+                <div class="card border-0 shadow-sm rounded-4">
 
                     <div class="card-body">
 
-                        <h5>Total Mitra</h5>
+                        <div class="d-flex justify-content-between align-items-center">
 
-                        <h2>
-                            {{ $totalMitra }}
-                        </h2>
+                            <div>
+
+                                <p class="text-muted mb-1">
+
+                                    Total Mitra
+
+                                </p>
+
+                                <h2 class="fw-bold">
+
+                                    {{ $totalMitra }}
+
+                                </h2>
+
+                            </div>
+
+                            <div class="bg-primary bg-opacity-10 p-3 rounded-circle">
+
+                                <i class="bi bi-buildings text-primary fs-3"></i>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
@@ -102,17 +167,35 @@
             <!-- Total Target -->
             <div class="col-md-4">
 
-                <div class="card shadow-sm border-0">
+                <div class="card border-0 shadow-sm rounded-4">
 
                     <div class="card-body">
 
-                        <h5>Total Target</h5>
+                        <div class="d-flex justify-content-between align-items-center">
 
-                        <h4>
+                            <div>
 
-                            Rp {{ number_format($totalTarget, 0, ',', '.') }}
+                                <p class="text-muted mb-1">
 
-                        </h4>
+                                    Total Target
+
+                                </p>
+
+                                <h4 class="fw-bold">
+
+                                    Rp {{ number_format($totalTarget,0,',','.') }}
+
+                                </h4>
+
+                            </div>
+
+                            <div class="bg-success bg-opacity-10 p-3 rounded-circle">
+
+                                <i class="bi bi-cash-stack text-success fs-3"></i>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
@@ -123,17 +206,35 @@
             <!-- Total Realisasi -->
             <div class="col-md-4">
 
-                <div class="card shadow-sm border-0">
+                <div class="card border-0 shadow-sm rounded-4">
 
                     <div class="card-body">
 
-                        <h5>Total Realisasi</h5>
+                        <div class="d-flex justify-content-between align-items-center">
 
-                        <h4>
+                            <div>
 
-                            Rp {{ number_format($totalRealisasi, 0, ',', '.') }}
+                                <p class="text-muted mb-1">
 
-                        </h4>
+                                    Total Realisasi
+
+                                </p>
+
+                                <h4 class="fw-bold">
+
+                                    Rp {{ number_format($totalRealisasi,0,',','.') }}
+
+                                </h4>
+
+                            </div>
+
+                            <div class="bg-warning bg-opacity-10 p-3 rounded-circle">
+
+                                <i class="bi bi-bar-chart-line text-warning fs-3"></i>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
@@ -144,9 +245,9 @@
         </div>
 
         <!-- Grafik -->
-        <div class="card shadow-sm border-0 mb-4">
+        <div class="card border-0 shadow-sm rounded-4 mt-4">
 
-            <div class="card-body">
+            <div class="card-body p-4">
 
                 <h5 class="mb-4">
                     Grafik Target vs Realisasi
@@ -159,51 +260,103 @@
         </div>
 
         <!-- Ranking Mitra -->
-        <div class="card shadow-sm border-0">
+        <div class="card border-0 shadow-sm rounded-4 mt-4">
 
-            <div class="card-body">
+            <div class="card-body p-4">
 
-                <h5 class="mb-4">
+                <h5 class="fw-bold mb-4">
+
                     Ranking Mitra Berdasarkan Realisasi
+
                 </h5>
 
-                <table class="table table-bordered">
+                <div class="table-responsive">
 
-                    <thead class="table-dark">
+                    <table class="table align-middle">
 
-                        <tr>
-                            <th>No</th>
-                            <th>Mitra</th>
-                            <th>Realisasi</th>
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        @foreach($rankingMitra as $item)
+                        <thead>
 
                             <tr>
 
-                                <td>{{ $loop->iteration }}</td>
+                                <th>Ranking</th>
 
-                                <td>
-                                    {{ $item->mitra->nama_mitra }}
-                                </td>
+                                <th>Mitra</th>
 
-                                <td>
+                                <th>Realisasi</th>
 
-                                    Rp {{ number_format($item->realisasi, 0, ',', '.') }}
-
-                                </td>
+                                <th>Status</th>
 
                             </tr>
 
-                        @endforeach
+                        </thead>
 
-                    </tbody>
+                        <tbody>
 
-                </table>
+                            @foreach($rankingMitra as $item)
+
+                                <tr>
+
+                                    <td>
+
+                                        <span class="badge bg-dark">
+
+                                            #{{ $loop->iteration }}
+
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+
+                                        {{ $item->mitra->nama_mitra }}
+
+                                    </td>
+
+                                    <td>
+
+                                        Rp {{ number_format($item->realisasi,0,',','.') }}
+
+                                    </td>
+
+                                    <td>
+
+                                        @if($item->persentase >= 80)
+
+                                            <span class="badge bg-success">
+
+                                                Baik
+
+                                            </span>
+
+                                        @elseif($item->persentase >= 50)
+
+                                            <span class="badge bg-warning text-dark">
+
+                                                Perlu Perhatian
+
+                                            </span>
+
+                                        @else
+
+                                            <span class="badge bg-danger">
+
+                                                Perlu Evaluasi
+
+                                            </span>
+
+                                        @endif
+
+                                    </td>
+
+                                </tr>
+
+                            @endforeach
+
+                        </tbody>
+
+                    </table>
+
+                </div>
 
             </div>
 
