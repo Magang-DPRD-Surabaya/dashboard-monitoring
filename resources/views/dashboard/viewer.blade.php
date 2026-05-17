@@ -69,6 +69,14 @@
 
         </div>
 
+        <!-- Tombol download laporan -->
+        <div class="mt-3">
+            <a href="{{ route('laporan.download', ['tahun_id' => $tahunId]) }}"
+            class="btn btn-danger">
+                Download PDF
+            </a>
+        </div>
+
         <!-- Card Statistik -->
         <div class="row mb-4">
 

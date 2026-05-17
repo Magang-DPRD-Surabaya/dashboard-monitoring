@@ -9,6 +9,7 @@ use App\Http\Controllers\StatusCapaianController;
 use App\Http\Controllers\KondisiLingkunganController;
 use App\Http\Controllers\PendapatanController;
 use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\LaporanController;
 
 
 Route::get('/', function () {
@@ -78,5 +79,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::get('/activity-log', [ActivityLogController::class, 'index'])
     ->middleware(['auth', 'role:admin'])
     ->name('activity-log.index');
+
+// Download laporan PDF
+Route::get('/laporan/download', [LaporanController::class, 'download'])
+    ->middleware(['auth'])
+    ->name('laporan.download');
 
 require __DIR__.'/auth.php';
