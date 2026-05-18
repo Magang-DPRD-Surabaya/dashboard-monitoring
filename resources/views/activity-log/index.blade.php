@@ -2,74 +2,161 @@
 
     <div class="container py-4">
 
-        <h2 class="mb-4">
-            Activity Log
-        </h2>
+        <!-- ========================= -->
+        <!-- HEADER -->
+        <!-- ========================= -->
 
-        <table class="table table-bordered table-striped">
+        <div class="mb-4">
 
-            <thead class="table-dark">
+            <h2 class="fw-bold mb-1">
 
-                <tr>
+                Activity Log
 
-                    <th>No</th>
+            </h2>
 
-                    <th>User</th>
+            <p class="text-muted mb-0">
 
-                    <th>Aksi</th>
+                Riwayat aktivitas pengguna pada sistem monitoring
 
-                    <th>Tabel</th>
+            </p>
 
-                    <th>Deskripsi</th>
+        </div>
 
-                    <th>Waktu</th>
+        <!-- ========================= -->
+        <!-- TABLE CARD -->
+        <!-- ========================= -->
 
-                </tr>
+        <div class="card border-0 shadow-sm rounded-4">
 
-            </thead>
+            <div class="card-body">
 
-            <tbody>
+                <div class="table-responsive">
 
-                @forelse($logs as $log)
+                    <table class="table align-middle">
 
-                    <tr>
+                        <!-- Header tabel -->
+                        <thead class="table-light">
 
-                        <td>{{ $loop->iteration }}</td>
+                            <tr>
 
-                        <td>{{ $log->user->name }}</td>
+                                <th>No</th>
 
-                        <td>{{ $log->aksi }}</td>
+                                <th>User</th>
 
-                        <td>{{ $log->tabel }}</td>
+                                <th>Aksi</th>
 
-                        <td>{{ $log->deskripsi }}</td>
+                                <th>Tabel</th>
 
-                        <td>
+                                <th>Deskripsi</th>
 
-                            {{ $log->created_at->format('d-m-Y H:i') }}
+                                <th>Waktu</th>
 
-                        </td>
+                            </tr>
 
-                    </tr>
+                        </thead>
 
-                @empty
+                        <tbody>
 
-                    <tr>
+                            @forelse($logs as $log)
 
-                        <td colspan="6"
-                            class="text-center">
+                                <tr>
 
-                            Activity log belum tersedia
+                                    <!-- Nomor -->
+                                    <td>
 
-                        </td>
+                                        {{ $loop->iteration }}
 
-                    </tr>
+                                    </td>
 
-                @endforelse
+                                    <!-- Nama user -->
+                                    <td class="fw-semibold">
 
-            </tbody>
+                                        {{ $log->user->name }}
 
-        </table>
+                                    </td>
+
+                                    <!-- Badge aksi -->
+                                    <td>
+
+                                        @if($log->aksi == 'create')
+
+                                            <span class="badge bg-success rounded-pill px-3 py-2">
+
+                                                Create
+
+                                            </span>
+
+                                        @elseif($log->aksi == 'update')
+
+                                            <span class="badge bg-warning text-dark rounded-pill px-3 py-2">
+
+                                                Update
+
+                                            </span>
+
+                                        @else
+
+                                            <span class="badge bg-danger rounded-pill px-3 py-2">
+
+                                                Delete
+
+                                            </span>
+
+                                        @endif
+
+                                    </td>
+
+                                    <!-- Nama tabel -->
+                                    <td>
+
+                                        <span class="badge bg-primary rounded-pill px-3 py-2">
+
+                                            {{ ucfirst($log->tabel) }}
+
+                                        </span>
+
+                                    </td>
+
+                                    <!-- Deskripsi -->
+                                    <td>
+
+                                        {{ $log->deskripsi }}
+
+                                    </td>
+
+                                    <!-- Waktu -->
+                                    <td class="text-muted">
+
+                                        {{ $log->created_at->format('d-m-Y H:i') }}
+
+                                    </td>
+
+                                </tr>
+
+                            @empty
+
+                                <tr>
+
+                                    <td colspan="6"
+                                        class="text-center text-muted py-4">
+
+                                        Activity log belum tersedia
+
+                                    </td>
+
+                                </tr>
+
+                            @endforelse
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
