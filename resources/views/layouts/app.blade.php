@@ -22,53 +22,211 @@
 
     <style>
 
+        body {
+
+            background-color: #f4f7fb;
+
+            font-family: 'Segoe UI', sans-serif;
+        }
+
         /**
          * Sidebar
          */
         .sidebar {
 
-            width: 250px;
+            width: 260px;
+
             min-height: 100vh;
 
-            background-color: #212529;
+            background: linear-gradient(
+                180deg,
+                #0d1b2a,
+                #1b263b
+            );
+
+            position: fixed;
+
+            left: 0;
+
+            top: 0;
+
+            overflow-y: auto;
+
+            z-index: 1000;
         }
 
         /**
-         * Link sidebar
+         * Logo sidebar
          */
-        .sidebar a {
+        .sidebar-brand {
 
-            color: #ffffff;
+            padding: 24px 20px;
+
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-brand h4 {
+
+            color: white;
+
+            font-weight: 700;
+
+            margin-bottom: 0;
+        }
+
+        .sidebar-brand p {
+
+            color: rgba(255,255,255,0.7);
+
+            font-size: 14px;
+
+            margin-bottom: 0;
+        }
+
+        /**
+         * Menu sidebar
+         */
+        .sidebar-menu {
+
+            padding: 20px 12px;
+        }
+
+        .sidebar-menu a {
+
+            color: rgba(255,255,255,0.85);
 
             text-decoration: none;
 
-            display: block;
+            display: flex;
 
-            padding: 12px 20px;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 12px 16px;
+
+            margin-bottom: 8px;
+
+            border-radius: 12px;
+
+            transition: all 0.3s ease;
+
+            font-size: 15px;
+
+            font-weight: 500;
         }
 
         /**
          * Hover menu
          */
-        .sidebar a:hover {
+        .sidebar-menu a:hover {
 
-            background-color: #343a40;
+            background-color: rgba(255,255,255,0.08);
+
+            color: white;
+
+            transform: translateX(4px);
         }
 
         /**
          * Active menu
          */
-        .sidebar .active {
+        .sidebar-menu .active {
 
-            background-color: #0d6efd;
+            background: linear-gradient(
+                135deg,
+                #0d6efd,
+                #3b82f6
+            );
+
+            color: white;
+
+            box-shadow: 0 4px 12px rgba(13,110,253,0.3);
         }
 
         /**
-         * Content kanan
+         * Icon
+         */
+        .sidebar-menu i {
+
+            font-size: 18px;
+        }
+
+        /**
+         * Main content
          */
         .main-content {
 
-            flex: 1;
+            margin-left: 260px;
+
+            min-height: 100vh;
+        }
+
+        /**
+         * Navbar
+         */
+        .top-navbar {
+
+            background-color: white;
+
+            padding: 16px 24px;
+
+            border-bottom: 1px solid #e9ecef;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 999;
+        }
+
+        .navbar-title {
+
+            font-size: 20px;
+
+            font-weight: 700;
+
+            color: #1b263b;
+        }
+
+        /**
+         * User button
+         */
+        .user-btn {
+
+            border-radius: 12px;
+
+            padding: 8px 16px;
+
+            font-weight: 500;
+        }
+
+        /**
+         * Content
+         */
+        .page-content {
+
+            padding: 24px;
+        }
+
+        /**
+         * Responsive
+         */
+        @media (max-width: 991px) {
+
+            .sidebar {
+
+                width: 100%;
+
+                min-height: auto;
+
+                position: relative;
+            }
+
+            .main-content {
+
+                margin-left: 0;
+            }
         }
 
     </style>
@@ -77,103 +235,123 @@
 
 <body>
 
-    <div class="d-flex">
+    <div class="sidebar">
 
-        <!-- ========================= -->
-        <!-- SIDEBAR -->
-        <!-- ========================= -->
+        <!-- Brand -->
+        <div class="sidebar-brand">
 
-        <div class="sidebar">
+            <h4>
+                Komisi B DPRD
+            </h4>
 
-            <!-- Logo/Judul -->
-            <div class="p-3 text-white border-bottom">
+            <p>
+                Dashboard Monitoring
+            </p>
 
-                <h4>
-                    Komisi B DPRD
-                </h4>
+        </div>
 
-            </div>
+        <!-- Menu -->
+        <div class="sidebar-menu">
 
-            <!-- Menu Dashboard -->
+            <!-- Dashboard -->
             <a href="/dashboard"
                class="{{ request()->is('dashboard') ? 'active' : '' }}">
 
                 <i class="bi bi-speedometer2"></i>
 
-                Dashboard
+                <span>
+                    Dashboard
+                </span>
 
             </a>
 
             @if(auth()->user()->role == 'admin')
-            <!-- Menu Mitra -->
+
+            <!-- Mitra Kerja -->
             <a href="/mitra-kerja"
                class="{{ request()->is('mitra-kerja*') ? 'active' : '' }}">
 
                 <i class="bi bi-buildings"></i>
 
-                Mitra Kerja
+                <span>
+                    Mitra Kerja
+                </span>
 
             </a>
 
-            <!-- Menu Tahun -->
+            <!-- Tahun Anggaran -->
             <a href="/tahun-anggaran"
                class="{{ request()->is('tahun-anggaran*') ? 'active' : '' }}">
 
                 <i class="bi bi-calendar-event"></i>
 
-                Tahun Anggaran
+                <span>
+                    Tahun Anggaran
+                </span>
 
             </a>
 
-            <!-- Menu Status -->
+            <!-- Status -->
             <a href="/status-capaian"
                class="{{ request()->is('status-capaian*') ? 'active' : '' }}">
 
                 <i class="bi bi-bar-chart"></i>
 
-                Status Capaian
+                <span>
+                    Status Capaian
+                </span>
 
             </a>
 
-            <!-- Menu Kondisi -->
+            <!-- Kondisi -->
             <a href="/kondisi-lingkungan"
                class="{{ request()->is('kondisi-lingkungan*') ? 'active' : '' }}">
 
                 <i class="bi bi-globe"></i>
 
-                Kondisi Lingkungan
+                <span>
+                    Kondisi Lingkungan
+                </span>
 
             </a>
+
             @endif
 
-            <!-- Menu Pendapatan -->
+            <!-- Pendapatan -->
             <a href="/pendapatan"
                class="{{ request()->is('pendapatan*') ? 'active' : '' }}">
 
                 <i class="bi bi-cash-stack"></i>
 
-                Pendapatan
+                <span>
+                    Pendapatan
+                </span>
 
             </a>
 
             @if(auth()->user()->role == 'admin')
-            <!-- Menu Activity Log -->
+
+            <!-- Activity Log -->
             <a href="/activity-log"
-            class="{{ request()->is('activity-log*') ? 'active' : '' }}">
+               class="{{ request()->is('activity-log*') ? 'active' : '' }}">
 
                 <i class="bi bi-clock-history"></i>
 
-                Activity Log
+                <span>
+                    Activity Log
+                </span>
 
             </a>
 
-            <!-- Menu User Management -->
-             <a href="/users"
-            class="{{ request()->is('users*') ? 'active' : '' }}">
+            <!-- User -->
+            <a href="/users"
+               class="{{ request()->is('users*') ? 'active' : '' }}">
 
                 <i class="bi bi-people"></i>
 
-                User Management
+                <span>
+                    User Management
+                </span>
 
             </a>
 
@@ -181,68 +359,64 @@
 
         </div>
 
-        <!-- ========================= -->
-        <!-- CONTENT -->
-        <!-- ========================= -->
+    </div>
 
-        <div class="main-content">
+    <!-- Main Content -->
+    <div class="main-content">
 
-            <!-- Navbar -->
-            <nav class="navbar navbar-light bg-light border-bottom px-4">
+        <!-- Navbar -->
+        <div class="top-navbar d-flex justify-content-between align-items-center">
 
-                <div class="container-fluid">
+            <div class="navbar-title">
 
-                    <span class="navbar-brand mb-0 h5">
-
-                        Dashboard Monitoring Pendapatan
-
-                    </span>
-
-                    <!-- User Login -->
-                    <div class="dropdown">
-
-                        <button class="btn btn-outline-secondary dropdown-toggle"
-                                data-bs-toggle="dropdown">
-
-                            {{ auth()->user()->name }}
-
-                        </button>
-
-                        <ul class="dropdown-menu dropdown-menu-end">
-
-                            <!-- Logout -->
-                            <li>
-
-                                <form method="POST"
-                                      action="{{ route('logout') }}">
-
-                                    @csrf
-
-                                    <button type="submit"
-                                            class="dropdown-item">
-
-                                        Logout
-
-                                    </button>
-
-                                </form>
-
-                            </li>
-
-                        </ul>
-
-                    </div>
-
-                </div>
-
-            </nav>
-
-            <!-- Content halaman -->
-            <div class="p-4">
-
-                {{ $slot }}
+                Dashboard Monitoring Pendapatan
 
             </div>
+
+            <!-- User -->
+            <div class="dropdown">
+
+                <button class="btn btn-light border user-btn dropdown-toggle"
+                        data-bs-toggle="dropdown">
+
+                    <i class="bi bi-person-circle me-1"></i>
+
+                    {{ auth()->user()->name }}
+
+                </button>
+
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-4">
+
+                    <li>
+
+                        <form method="POST"
+                              action="{{ route('logout') }}">
+
+                            @csrf
+
+                            <button type="submit"
+                                    class="dropdown-item">
+
+                                <i class="bi bi-box-arrow-right me-2"></i>
+
+                                Logout
+
+                            </button>
+
+                        </form>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+        <!-- Content -->
+        <div class="page-content">
+
+            {{ $slot }}
 
         </div>
 
