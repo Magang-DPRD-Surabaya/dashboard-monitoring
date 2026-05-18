@@ -2,96 +2,199 @@
 
     <div class="container py-4">
 
-        <h2 class="mb-4">
-            Data Status Capaian
-        </h2>
+        <!-- ========================= -->
+        <!-- HEADER -->
+        <!-- ========================= -->
 
-        <!-- Tombol tambah -->
-        <a href="{{ route('status-capaian.create') }}"
-           class="btn btn-primary mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-4">
 
-            Tambah Status
+            <div>
 
-        </a>
+                <!-- Judul -->
+                <h2 class="fw-bold mb-1">
 
-        <!-- Alert sukses -->
+                    Data Status Capaian
+
+                </h2>
+
+                <!-- Subjudul -->
+                <p class="text-muted mb-0">
+
+                    Kelola status capaian monitoring pendapatan
+
+                </p>
+
+            </div>
+
+            <!-- Tombol tambah -->
+            <a href="{{ route('status-capaian.create') }}"
+               class="btn btn-primary rounded-3 px-4 shadow-sm">
+
+                <i class="bi bi-plus-circle me-1"></i>
+
+                Tambah Status
+
+            </a>
+
+        </div>
+
+        <!-- ========================= -->
+        <!-- ALERT -->
+        <!-- ========================= -->
+
         @if(session('success'))
 
-            <div class="alert alert-success">
+            <div class="alert alert-success border-0 shadow-sm rounded-4">
+
+                <i class="bi bi-check-circle-fill me-2"></i>
+
                 {{ session('success') }}
+
             </div>
 
         @endif
 
-        <!-- Tabel -->
-        <table class="table table-bordered">
+        <!-- ========================= -->
+        <!-- TABLE CARD -->
+        <!-- ========================= -->
 
-            <thead>
+        <div class="card border-0 shadow-sm rounded-4">
 
-                <tr>
-                    <th>No</th>
-                    <th>Nama Status</th>
-                    <th width="200">Aksi</th>
-                </tr>
+            <div class="card-body">
 
-            </thead>
+                <div class="table-responsive">
 
-            <tbody>
+                    <table class="table align-middle table-hover">
 
-                @forelse($status as $item)
+                        <!-- Header tabel -->
+                        <thead class="table-light">
 
-                    <tr>
+                            <tr>
 
-                        <td>{{ $loop->iteration }}</td>
+                                <th>No</th>
 
-                        <td>{{ $item->nama_status }}</td>
+                                <th>Nama Status</th>
 
-                        <td>
+                                <th width="200">
+                                    Aksi
+                                </th>
 
-                            <!-- Tombol edit -->
-                            <a href="{{ route('status-capaian.edit', $item->id) }}"
-                               class="btn btn-warning btn-sm">
+                            </tr>
 
-                                Edit
+                        </thead>
 
-                            </a>
+                        <tbody>
 
-                            <!-- Form hapus -->
-                            <form action="{{ route('status-capaian.destroy', $item->id) }}"
-                                  method="POST"
-                                  class="d-inline">
+                            @forelse($status as $item)
 
-                                @csrf
-                                @method('DELETE')
+                                <tr>
 
-                                <button type="submit"
-                                        class="btn btn-danger btn-sm">
+                                    <!-- Nomor -->
+                                    <td>
 
-                                    Hapus
+                                        {{ $loop->iteration }}
 
-                                </button>
+                                    </td>
 
-                            </form>
+                                    <!-- Status -->
+                                    <td>
 
-                        </td>
+                                        <!-- Badge status -->
+                                        @if($item->nama_status == 'Baik')
 
-                    </tr>
+                                            <span class="badge bg-success rounded-pill px-3 py-2">
 
-                @empty
+                                                {{ $item->nama_status }}
 
-                    <tr>
+                                            </span>
 
-                        <td colspan="3" class="text-center">
-                            Data belum tersedia
-                        </td>
+                                        @elseif($item->nama_status == 'Perlu Perhatian')
 
-                    </tr>
+                                            <span class="badge bg-warning text-dark rounded-pill px-3 py-2">
 
-                @endforelse
+                                                {{ $item->nama_status }}
 
-            </tbody>
+                                            </span>
 
-        </table>
+                                        @else
+
+                                            <span class="badge bg-danger rounded-pill px-3 py-2">
+
+                                                {{ $item->nama_status }}
+
+                                            </span>
+
+                                        @endif
+
+                                    </td>
+
+                                    <!-- Aksi -->
+                                    <td>
+
+                                        <!-- Tombol edit -->
+                                        <a href="{{ route('status-capaian.edit', $item->id) }}"
+                                           class="btn btn-warning btn-sm rounded-3">
+
+                                            <i class="bi bi-pencil-square"></i>
+
+                                            Edit
+
+                                        </a>
+
+                                        <!-- Form hapus -->
+                                        <form action="{{ route('status-capaian.destroy', $item->id) }}"
+                                              method="POST"
+                                              class="d-inline">
+
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="submit"
+                                                    class="btn btn-danger btn-sm rounded-3">
+
+                                                <i class="bi bi-trash"></i>
+
+                                                Hapus
+
+                                            </button>
+
+                                        </form>
+
+                                    </td>
+
+                                </tr>
+
+                            @empty
+
+                                <!-- Empty state -->
+                                <tr>
+
+                                    <td colspan="3"
+                                        class="text-center py-5">
+
+                                        <i class="bi bi-clipboard-x fs-1 text-muted"></i>
+
+                                        <p class="text-muted mt-3 mb-0">
+
+                                            Data status capaian belum tersedia
+
+                                        </p>
+
+                                    </td>
+
+                                </tr>
+
+                            @endforelse
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
