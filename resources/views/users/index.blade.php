@@ -2,22 +2,47 @@
 
     <div class="container py-4">
 
-        <h2 class="mb-4">
-            User Management
-        </h2>
+        <!-- ========================= -->
+        <!-- HEADER -->
+        <!-- ========================= -->
 
-        <!-- Tombol tambah -->
-        <a href="{{ route('users.create') }}"
-           class="btn btn-primary mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-4">
 
-            Tambah User
+            <div>
 
-        </a>
+                <h2 class="fw-bold mb-1">
 
-        <!-- Alert -->
+                    User Management
+
+                </h2>
+
+                <p class="text-muted mb-0">
+
+                    Kelola akun pengguna dan hak akses sistem
+
+                </p>
+
+            </div>
+
+            <!-- Tombol tambah user -->
+            <a href="{{ route('users.create') }}"
+               class="btn btn-primary rounded-3 px-4">
+
+                <i class="bi bi-plus-circle me-1"></i>
+
+                Tambah User
+
+            </a>
+
+        </div>
+
+        <!-- ========================= -->
+        <!-- ALERT -->
+        <!-- ========================= -->
+
         @if(session('success'))
 
-            <div class="alert alert-success">
+            <div class="alert alert-success border-0 shadow-sm rounded-4">
 
                 {{ session('success') }}
 
@@ -26,106 +51,158 @@
         @endif
 
         @if(session('error'))
-            <div class="alert alert-danger">
+
+            <div class="alert alert-danger border-0 shadow-sm rounded-4">
+
                 {{ session('error') }}
+
             </div>
 
         @endif
 
-        <!-- Tabel -->
-        <table class="table table-bordered table-striped">
+        <!-- ========================= -->
+        <!-- TABLE CARD -->
+        <!-- ========================= -->
 
-            <thead class="table-dark">
+        <div class="card border-0 shadow-sm rounded-4">
 
-                <tr>
+            <div class="card-body">
 
-                    <th>No</th>
+                <div class="table-responsive">
 
-                    <th>Nama</th>
+                    <table class="table align-middle">
 
-                    <th>Email</th>
+                        <!-- Header -->
+                        <thead class="table-light">
 
-                    <th>Role</th>
+                            <tr>
 
-                    <th width="200">
-                        Aksi
-                    </th>
+                                <th>No</th>
 
-                </tr>
+                                <th>Nama</th>
 
-            </thead>
+                                <th>Email</th>
 
-            <tbody>
+                                <th>Role</th>
 
-                @forelse($users as $user)
+                                <th width="180">
+                                    Aksi
+                                </th>
 
-                    <tr>
+                            </tr>
 
-                        <td>{{ $loop->iteration }}</td>
+                        </thead>
 
-                        <td>{{ $user->name }}</td>
+                        <tbody>
 
-                        <td>{{ $user->email }}</td>
+                            @forelse($users as $user)
 
-                        <td>
+                                <tr>
 
-                            <span class="badge bg-primary">
+                                    <!-- Nomor -->
+                                    <td>
 
-                                {{ $user->role }}
+                                        {{ $loop->iteration }}
 
-                            </span>
+                                    </td>
 
-                        </td>
+                                    <!-- Nama -->
+                                    <td class="fw-semibold">
 
-                        <td>
+                                        {{ $user->name }}
 
-                            <!-- Edit -->
-                            <a href="{{ route('users.edit', $user->id) }}"
-                               class="btn btn-warning btn-sm">
+                                    </td>
 
-                                Edit
+                                    <!-- Email -->
+                                    <td>
 
-                            </a>
+                                        {{ $user->email }}
 
-                            <!-- Delete -->
-                            <form action="{{ route('users.destroy', $user->id) }}"
-                                  method="POST"
-                                  class="d-inline">
+                                    </td>
 
-                                @csrf
-                                @method('DELETE')
+                                    <!-- Role -->
+                                    <td>
 
-                                <button type="submit"
-                                        class="btn btn-danger btn-sm">
+                                        @if($user->role == 'admin')
 
-                                    Hapus
+                                            <span class="badge bg-primary rounded-pill px-3 py-2">
 
-                                </button>
+                                                Admin
 
-                            </form>
+                                            </span>
 
-                        </td>
+                                        @else
 
-                    </tr>
+                                            <span class="badge bg-secondary rounded-pill px-3 py-2">
 
-                @empty
+                                                Viewer
 
-                    <tr>
+                                            </span>
 
-                        <td colspan="5"
-                            class="text-center">
+                                        @endif
 
-                            Data user belum tersedia
+                                    </td>
 
-                        </td>
+                                    <!-- Tombol aksi -->
+                                    <td>
 
-                    </tr>
+                                        <!-- Edit -->
+                                        <a href="{{ route('users.edit', $user->id) }}"
+                                           class="btn btn-warning btn-sm rounded-3">
 
-                @endforelse
+                                            <i class="bi bi-pencil-square"></i>
 
-            </tbody>
+                                            Edit
 
-        </table>
+                                        </a>
+
+                                        <!-- Delete -->
+                                        <form action="{{ route('users.destroy', $user->id) }}"
+                                              method="POST"
+                                              class="d-inline">
+
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="submit"
+                                                    class="btn btn-danger btn-sm rounded-3">
+
+                                                <i class="bi bi-trash"></i>
+
+                                                Hapus
+
+                                            </button>
+
+                                        </form>
+
+                                    </td>
+
+                                </tr>
+
+                            @empty
+
+                                <tr>
+
+                                    <td colspan="5"
+                                        class="text-center text-muted py-4">
+
+                                        Data user belum tersedia
+
+                                    </td>
+
+                                </tr>
+
+                            @endforelse
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
