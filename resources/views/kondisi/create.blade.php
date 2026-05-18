@@ -2,14 +2,33 @@
 
     <div class="container py-4">
 
-        <h2 class="mb-4">
-            Tambah Kondisi Lingkungan
-        </h2>
+        <!-- ========================= -->
+        <!-- HEADER -->
+        <!-- ========================= -->
 
-        <!-- Menampilkan error validasi -->
+        <div class="mb-4">
+
+            <h2 class="fw-bold mb-1">
+
+                Tambah Kondisi Lingkungan
+
+            </h2>
+
+            <p class="text-muted mb-0">
+
+                Tambahkan data kondisi lingkungan baru
+
+            </p>
+
+        </div>
+
+        <!-- ========================= -->
+        <!-- VALIDATION -->
+        <!-- ========================= -->
+
         @if ($errors->any())
 
-            <div class="alert alert-danger">
+            <div class="alert alert-danger border-0 shadow-sm rounded-4">
 
                 <ul class="mb-0">
 
@@ -25,43 +44,62 @@
 
         @endif
 
-        <!-- Form tambah -->
-        <form action="{{ route('kondisi-lingkungan.store') }}"
-              method="POST">
+        <!-- ========================= -->
+        <!-- FORM CARD -->
+        <!-- ========================= -->
 
-            @csrf
+        <div class="card border-0 shadow-sm rounded-4">
 
-            <!-- Input nama kondisi -->
-            <div class="mb-3">
+            <div class="card-body p-4">
 
-                <label class="form-label">
-                    Nama Kondisi
-                </label>
+                <!-- Form tambah -->
+                <form action="{{ route('kondisi-lingkungan.store') }}"
+                      method="POST">
 
-                <input type="text"
-                       name="nama_kondisi"
-                       class="form-control"
-                       value="{{ old('nama_kondisi') }}">
+                    @csrf
+
+                    <!-- Nama kondisi -->
+                    <div class="mb-4">
+
+                        <label class="form-label fw-semibold">
+
+                            Nama Kondisi
+
+                        </label>
+
+                        <input type="text"
+                               name="nama_kondisi"
+                               class="form-control rounded-3"
+                               value="{{ old('nama_kondisi') }}">
+
+                    </div>
+
+                    <!-- Tombol -->
+                    <div class="d-flex gap-2">
+
+                        <button type="submit"
+                                class="btn btn-primary rounded-3 px-4">
+
+                            <i class="bi bi-save me-1"></i>
+
+                            Simpan
+
+                        </button>
+
+                        <a href="{{ route('kondisi-lingkungan.index') }}"
+                           class="btn btn-secondary rounded-3 px-4">
+
+                            Kembali
+
+                        </a>
+
+                    </div>
+
+                </form>
 
             </div>
 
-            <!-- Tombol simpan -->
-            <button type="submit"
-                    class="btn btn-primary">
-
-                Simpan
-
-            </button>
-
-            <!-- Tombol kembali -->
-            <a href="{{ route('kondisi-lingkungan.index') }}"
-               class="btn btn-secondary">
-
-                Kembali
-
-            </a>
-
-        </form>
+        </div>
 
     </div>
 
