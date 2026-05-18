@@ -15,19 +15,45 @@ class PendapatanController extends Controller
     /**
      * Menampilkan semua data pendapatan
      */
-    public function index()
-    {
+    public function index(Request $request){
+        //Ambil keyword pencarian
+        $search = $request->search;
+
         // Ambil data beserta relasi
         $pendapatan = Pendapatan::with([
+
             'mitra',
             'tahun',
             'status',
             'kondisi'
-        ])->latest()->get();
 
-        return view('pendapatan.index', compact('pendapatan'));
+        ])
+
+        ->when($search, function ($query) use ($search) {
+
+            $query->whereHas('mitra', function ($q) use ($search) {
+
+                $q->where(
+                    'nama_mitra',
+                    'like',
+                    '%' . $search . '%'
+                );
+
+            });
+
+        })
+
+        ->latest()
+
+        ->paginate(10);
+
+        // Tampilkan view
+        return view(
+            'pendapatan.index',
+            compact('pendapatan')
+        );
     }
-
+    
     /**
      * Form tambah pendapatan
      */

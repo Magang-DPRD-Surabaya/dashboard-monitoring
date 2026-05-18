@@ -26,138 +26,213 @@
 
         @endif
 
+        <!-- SEARCH -->
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+
+            <div class="card-body">
+
+                <form method="GET"
+                    action="{{ route('pendapatan.index') }}">
+
+                    <div class="row g-2">
+
+                        <!-- Input -->
+                        <div class="col-md-10">
+
+                            <input type="text"
+                                name="search"
+                                class="form-control rounded-3"
+                                placeholder="Cari nama mitra kerja..."
+                                value="{{ request('search') }}">
+
+                        </div>
+
+                        <!-- Tombol -->
+                        <div class="col-md-2">
+
+                            <button type="submit"
+                                    class="btn btn-primary w-100 rounded-3">
+
+                                <i class="bi bi-search"></i>
+
+                                Cari
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+        
         <!-- Tabel pendapatan -->
-        <table class="table table-bordered table-striped">
+        <div class="card border-0 shadow-sm rounded-4">
 
-            <thead class="table-dark">
+            <div class="card-body">
 
-                <tr>
-                    <th>No</th>
-                    <th>Mitra</th>
-                    <th>Tahun</th>
-                    <th>Target</th>
-                    <th>Realisasi</th>
-                    <th>Persentase</th>
-                    <th>Status</th>
-                    <th>Kondisi</th>
-                    <th width="200">Aksi</th>
-                </tr>
+                <div class="table-responsive">
 
-            </thead>
+                    <table class="table align-middle table-striped">
 
-            <tbody>
+                        <thead class="table-dark">
 
-                @forelse($pendapatan as $item)
+                            <tr>
+                                <th>No</th>
+                                <th>Mitra</th>
+                                <th>Tahun</th>
+                                <th>Target</th>
+                                <th>Realisasi</th>
+                                <th>Persentase</th>
+                                <th>Status</th>
+                                <th>Kondisi</th>
+                                <th width="200">Aksi</th>
+                            </tr>
 
-                    <tr>
+                        </thead>
 
-                        <!-- Nomor urut -->
-                        <td>{{ $loop->iteration }}</td>
+                        <tbody>
 
-                        <!-- Nama mitra -->
-                        <td>{{ $item->mitra->nama_mitra }}</td>
+                            @forelse($pendapatan as $item)
 
-                        <!-- Tahun -->
-                        <td>{{ $item->tahun->tahun }}</td>
+                                <tr>
 
-                        <!-- Target -->
-                        <td>
-                            Rp {{ number_format($item->target, 0, ',', '.') }}
-                        </td>
+                                    <!-- Nomor urut -->
+                                    <td>{{ $loop->iteration }}</td>
 
-                        <!-- Realisasi -->
-                        <td>
-                            Rp {{ number_format($item->realisasi, 0, ',', '.') }}
-                        </td>
+                                    <!-- Nama mitra -->
+                                    <td>{{ $item->mitra->nama_mitra }}</td>
 
-                        <!-- Persentase -->
-                        <td>
-                            {{ number_format($item->persentase, 2) }}%
-                        </td>
+                                    <!-- Tahun -->
+                                    <td>{{ $item->tahun->tahun }}</td>
 
-                        <!-- Status -->
-                        <td>
+                                    <!-- Target -->
+                                    <td>
+                                        Rp {{ number_format($item->target, 0, ',', '.') }}
+                                    </td>
 
-                            @if($item->persentase >= 80)
+                                    <!-- Realisasi -->
+                                    <td>
+                                        Rp {{ number_format($item->realisasi, 0, ',', '.') }}
+                                    </td>
 
-                                <span class="badge bg-success">
-                                    {{ $item->status->nama_status }}
-                                </span>
+                                    <!-- Persentase -->
+                                    <td>
+                                        {{ number_format($item->persentase, 2) }}%
+                                    </td>
 
-                            @elseif($item->persentase >= 50)
+                                    <!-- Status -->
+                                    <td>
 
-                                <span class="badge bg-warning text-dark">
-                                    {{ $item->status->nama_status }}
-                                </span>
+                                        @if($item->persentase >= 80)
 
-                            @else
+                                            <span class="badge bg-success">
 
-                                <span class="badge bg-danger">
-                                    {{ $item->status->nama_status }}
-                                </span>
+                                                {{ $item->status->nama_status }}
 
-                            @endif
+                                            </span>
 
-                        </td>
+                                        @elseif($item->persentase >= 50)
 
-                        <!-- Kondisi -->
-                        <td>
-                            {{ $item->kondisi->nama_kondisi }}
-                        </td>
+                                            <span class="badge bg-warning text-dark">
 
-                        @if(auth()->user()->role == 'admin')
-                        <!-- Tombol aksi -->
-                        <td>
+                                                {{ $item->status->nama_status }}
 
-                            <!-- Tombol edit -->
-                            <a href="{{ route('pendapatan.edit', $item->id) }}"
-                               class="btn btn-warning btn-sm">
+                                            </span>
 
-                                Edit
+                                        @else
 
-                            </a>
+                                            <span class="badge bg-danger">
 
-                            <!-- Form hapus -->
-                            <form action="{{ route('pendapatan.destroy', $item->id) }}"
-                                  method="POST"
-                                  class="d-inline">
+                                                {{ $item->status->nama_status }}
 
-                                @csrf
-                                @method('DELETE')
+                                            </span>
 
-                                <button type="submit"
-                                        class="btn btn-danger btn-sm">
+                                        @endif
 
-                                    Hapus
+                                    </td>
 
-                                </button>
+                                    <!-- Kondisi -->
+                                    <td>
+                                        {{ $item->kondisi->nama_kondisi }}
+                                    </td>
 
-                            </form>
+                                    @if(auth()->user()->role == 'admin')
+                                    <!-- Tombol aksi -->
+                                    <td>
 
-                        </td>
-                        @endif
-                        
-                    </tr>
+                                        <!-- Tombol edit -->
+                                        <a href="{{ route('pendapatan.edit', $item->id) }}"
+                                        class="btn btn-warning btn-sm rounded-3">
 
-                @empty
+                                            Edit
 
-                    <tr>
+                                        </a>
 
-                        <td colspan="9"
-                            class="text-center">
+                                        <!-- Form hapus -->
+                                        <form action="{{ route('pendapatan.destroy', $item->id) }}"
+                                            method="POST"
+                                            class="d-inline">
 
-                            Data pendapatan belum tersedia
+                                            @csrf
+                                            @method('DELETE')
 
-                        </td>
+                                            <button type="submit"
+                                                    class="btn btn-danger btn-sm rounded-3">
 
-                    </tr>
+                                                Hapus
 
-                @endforelse
+                                            </button>
 
-            </tbody>
+                                        </form>
 
-        </table>
+                                    </td>
+                                    @endif
+                                    
+                                </tr>
 
+                            @empty
+
+                                <tr>
+
+                                    <td colspan="9"
+                                        class="text-center">
+                                        <div class="text-center py-4">
+
+                                            <i class="bi bi-inbox fs-1 text-muted"></i>
+
+                                            <p class="text-muted mt-2">
+
+                                                Data pendapatan belum tersedia
+
+                                            </p>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            @endforelse
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+        
+        <div class="mt-4">
+
+            {{ $pendapatan->links() }}
+
+        </div>
     </div>
 
 </x-app-layout>
