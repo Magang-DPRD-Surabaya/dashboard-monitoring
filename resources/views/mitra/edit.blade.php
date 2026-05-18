@@ -2,13 +2,33 @@
 
     <div class="container py-4">
 
-        <!-- Judul halaman -->
-        <h2 class="mb-4">Edit Mitra Kerja</h2>
+        <!-- ========================= -->
+        <!-- HEADER -->
+        <!-- ========================= -->
 
-        <!-- Menampilkan error validasi -->
+        <div class="mb-4">
+
+            <h2 class="fw-bold mb-1">
+
+                Edit Mitra Kerja
+
+            </h2>
+
+            <p class="text-muted mb-0">
+
+                Perbarui data mitra kerja
+
+            </p>
+
+        </div>
+
+        <!-- ========================= -->
+        <!-- VALIDATION -->
+        <!-- ========================= -->
+
         @if ($errors->any())
 
-            <div class="alert alert-danger">
+            <div class="alert alert-danger border-0 shadow-sm rounded-4">
 
                 <ul class="mb-0">
 
@@ -24,81 +44,107 @@
 
         @endif
 
-        <!-- Form edit -->
-        <form action="{{ route('mitra-kerja.update', $mitra->id) }}"
-              method="POST">
+        <!-- ========================= -->
+        <!-- FORM CARD -->
+        <!-- ========================= -->
 
-            @csrf
-            @method('PUT')
+        <div class="card border-0 shadow-sm rounded-4">
 
-            <!-- Nama Mitra -->
-            <div class="mb-3">
+            <div class="card-body p-4">
 
-                <label class="form-label">
-                    Nama Mitra
-                </label>
+                <form action="{{ route('mitra-kerja.update', $mitra->id) }}"
+                      method="POST">
 
-                <input type="text"
-                       name="nama_mitra"
-                       class="form-control"
-                       value="{{ $mitra->nama_mitra }}">
+                    @csrf
+                    @method('PUT')
+
+                    <!-- Nama Mitra -->
+                    <div class="mb-3">
+
+                        <label class="form-label fw-semibold">
+
+                            Nama Mitra
+
+                        </label>
+
+                        <input type="text"
+                               name="nama_mitra"
+                               class="form-control rounded-3"
+                               value="{{ $mitra->nama_mitra }}">
+
+                    </div>
+
+                    <!-- Jenis -->
+                    <div class="mb-3">
+
+                        <label class="form-label fw-semibold">
+
+                            Jenis Mitra
+
+                        </label>
+
+                        <select name="jenis"
+                                class="form-select rounded-3">
+
+                            <option value="BUMD"
+                                {{ $mitra->jenis == 'BUMD' ? 'selected' : '' }}>
+
+                                BUMD
+
+                            </option>
+
+                            <option value="DINAS"
+                                {{ $mitra->jenis == 'DINAS' ? 'selected' : '' }}>
+
+                                DINAS
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Deskripsi -->
+                    <div class="mb-4">
+
+                        <label class="form-label fw-semibold">
+
+                            Deskripsi
+
+                        </label>
+
+                        <textarea name="deskripsi"
+                                  class="form-control rounded-3"
+                                  rows="4">{{ $mitra->deskripsi }}</textarea>
+
+                    </div>
+
+                    <!-- Tombol -->
+                    <div class="d-flex gap-2">
+
+                        <button type="submit"
+                                class="btn btn-primary rounded-3 px-4">
+
+                            <i class="bi bi-save me-1"></i>
+
+                            Update
+
+                        </button>
+
+                        <a href="{{ route('mitra-kerja.index') }}"
+                           class="btn btn-secondary rounded-3 px-4">
+
+                            Kembali
+
+                        </a>
+
+                    </div>
+
+                </form>
 
             </div>
 
-            <!-- Jenis Mitra -->
-            <div class="mb-3">
-
-                <label class="form-label">
-                    Jenis Mitra
-                </label>
-
-                <select name="jenis"
-                        class="form-control">
-
-                    <option value="BUMD"
-                        {{ $mitra->jenis == 'BUMD' ? 'selected' : '' }}>
-                        BUMD
-                    </option>
-
-                    <option value="DINAS"
-                        {{ $mitra->jenis == 'DINAS' ? 'selected' : '' }}>
-                        DINAS
-                    </option>
-
-                </select>
-
-            </div>
-
-            <!-- Deskripsi -->
-            <div class="mb-3">
-
-                <label class="form-label">
-                    Deskripsi
-                </label>
-
-                <textarea name="deskripsi"
-                          class="form-control"
-                          rows="4">{{ $mitra->deskripsi }}</textarea>
-
-            </div>
-
-            <!-- Tombol update -->
-            <button type="submit"
-                    class="btn btn-primary">
-
-                Update
-
-            </button>
-
-            <!-- Tombol kembali -->
-            <a href="{{ route('mitra-kerja.index') }}"
-               class="btn btn-secondary">
-
-                Kembali
-
-            </a>
-
-        </form>
+        </div>
 
     </div>
 
