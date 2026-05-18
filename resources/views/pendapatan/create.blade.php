@@ -2,14 +2,33 @@
 
     <div class="container py-4">
 
-        <h2 class="mb-4">
-            Tambah Data Pendapatan
-        </h2>
+        <!-- ========================= -->
+        <!-- HEADER -->
+        <!-- ========================= -->
 
-        <!-- Error validasi -->
+        <div class="mb-4">
+
+            <h2 class="fw-bold mb-1">
+
+                Tambah Data Pendapatan
+
+            </h2>
+
+            <p class="text-muted mb-0">
+
+                Tambahkan data monitoring pendapatan mitra kerja
+
+            </p>
+
+        </div>
+
+        <!-- ========================= -->
+        <!-- VALIDATION ERROR -->
+        <!-- ========================= -->
+
         @if ($errors->any())
 
-            <div class="alert alert-danger">
+            <div class="alert alert-danger border-0 shadow-sm rounded-4">
 
                 <ul class="mb-0">
 
@@ -25,151 +44,208 @@
 
         @endif
 
-        <!-- Form tambah -->
-        <form action="{{ route('pendapatan.store') }}"
-              method="POST">
+        <!-- ========================= -->
+        <!-- FORM CARD -->
+        <!-- ========================= -->
 
-            @csrf
+        <div class="card border-0 shadow-sm rounded-4">
 
-            <!-- Mitra Kerja -->
-            <div class="mb-3">
+            <div class="card-body p-4">
 
-                <label class="form-label">
-                    Mitra Kerja
-                </label>
+                <!-- Form tambah -->
+                <form action="{{ route('pendapatan.store') }}"
+                      method="POST">
 
-                <select name="mitra_id"
-                        class="form-control">
+                    @csrf
 
-                    <option value="">
-                        -- Pilih Mitra --
-                    </option>
+                    <!-- ========================= -->
+                    <!-- GRID FORM -->
+                    <!-- ========================= -->
 
-                    @foreach($mitra as $item)
+                    <div class="row">
 
-                        <option value="{{ $item->id }}">
+                        <!-- Mitra kerja -->
+                        <div class="col-md-6 mb-4">
 
-                            {{ $item->nama_mitra }}
+                            <label class="form-label fw-semibold">
 
-                        </option>
+                                Mitra Kerja
 
-                    @endforeach
+                            </label>
 
-                </select>
+                            <select name="mitra_id"
+                                    class="form-select rounded-3">
+
+                                <option value="">
+                                    -- Pilih Mitra --
+                                </option>
+
+                                @foreach($mitra as $item)
+
+                                    <option value="{{ $item->id }}">
+
+                                        {{ $item->nama_mitra }}
+
+                                    </option>
+
+                                @endforeach
+
+                            </select>
+
+                        </div>
+
+                        <!-- Tahun -->
+                        <div class="col-md-6 mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                Tahun Anggaran
+
+                            </label>
+
+                            <select name="tahun_id"
+                                    class="form-select rounded-3">
+
+                                <option value="">
+                                    -- Pilih Tahun --
+                                </option>
+
+                                @foreach($tahun as $item)
+
+                                    <option value="{{ $item->id }}">
+
+                                        {{ $item->tahun }}
+
+                                    </option>
+
+                                @endforeach
+
+                            </select>
+
+                        </div>
+
+                        <!-- Target -->
+                        <div class="col-md-6 mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                Target Pendapatan
+
+                            </label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-text">
+                                    Rp
+                                </span>
+
+                                <input type="number"
+                                       name="target"
+                                       class="form-control rounded-end-3">
+
+                            </div>
+
+                        </div>
+
+                        <!-- Realisasi -->
+                        <div class="col-md-6 mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                Realisasi Pendapatan
+
+                            </label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-text">
+                                    Rp
+                                </span>
+
+                                <input type="number"
+                                       name="realisasi"
+                                       class="form-control rounded-end-3">
+
+                            </div>
+
+                        </div>
+
+                        <!-- Kondisi -->
+                        <div class="col-md-12 mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                Kondisi Lingkungan
+
+                            </label>
+
+                            <select name="kondisi_id"
+                                    class="form-select rounded-3">
+
+                                <option value="">
+                                    -- Pilih Kondisi --
+                                </option>
+
+                                @foreach($kondisi as $item)
+
+                                    <option value="{{ $item->id }}">
+
+                                        {{ $item->nama_kondisi }}
+
+                                    </option>
+
+                                @endforeach
+
+                            </select>
+
+                        </div>
+
+                        <!-- Catatan -->
+                        <div class="col-md-12 mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                Catatan
+
+                            </label>
+
+                            <textarea name="catatan"
+                                      rows="5"
+                                      class="form-control rounded-3"></textarea>
+
+                        </div>
+
+                    </div>
+
+                    <!-- ========================= -->
+                    <!-- BUTTON -->
+                    <!-- ========================= -->
+
+                    <div class="d-flex gap-2">
+
+                        <button type="submit"
+                                class="btn btn-primary rounded-3 px-4">
+
+                            <i class="bi bi-save me-1"></i>
+
+                            Simpan
+
+                        </button>
+
+                        <a href="{{ route('pendapatan.index') }}"
+                           class="btn btn-secondary rounded-3 px-4">
+
+                            Kembali
+
+                        </a>
+
+                    </div>
+
+                </form>
 
             </div>
 
-            <!-- Tahun -->
-            <div class="mb-3">
-
-                <label class="form-label">
-                    Tahun Anggaran
-                </label>
-
-                <select name="tahun_id"
-                        class="form-control">
-
-                    <option value="">
-                        -- Pilih Tahun --
-                    </option>
-
-                    @foreach($tahun as $item)
-
-                        <option value="{{ $item->id }}">
-
-                            {{ $item->tahun }}
-
-                        </option>
-
-                    @endforeach
-
-                </select>
-
-            </div>
-
-            <!-- Target -->
-            <div class="mb-3">
-
-                <label class="form-label">
-                    Target Pendapatan
-                </label>
-
-                <input type="number"
-                       name="target"
-                       class="form-control">
-
-            </div>
-
-            <!-- Realisasi -->
-            <div class="mb-3">
-
-                <label class="form-label">
-                    Realisasi Pendapatan
-                </label>
-
-                <input type="number"
-                       name="realisasi"
-                       class="form-control">
-
-            </div>
-
-            <!-- Kondisi -->
-            <div class="mb-3">
-
-                <label class="form-label">
-                    Kondisi Lingkungan
-                </label>
-
-                <select name="kondisi_id"
-                        class="form-control">
-
-                    <option value="">
-                        -- Pilih Kondisi --
-                    </option>
-
-                    @foreach($kondisi as $item)
-
-                        <option value="{{ $item->id }}">
-
-                            {{ $item->nama_kondisi }}
-
-                        </option>
-
-                    @endforeach
-
-                </select>
-
-            </div>
-
-            <!-- Catatan -->
-            <div class="mb-3">
-
-                <label class="form-label">
-                    Catatan
-                </label>
-
-                <textarea name="catatan"
-                          rows="4"
-                          class="form-control"></textarea>
-
-            </div>
-
-            <!-- Tombol -->
-            <button type="submit"
-                    class="btn btn-primary">
-
-                Simpan
-
-            </button>
-
-            <a href="{{ route('pendapatan.index') }}"
-               class="btn btn-secondary">
-
-                Kembali
-
-            </a>
-
-        </form>
+        </div>
 
     </div>
 

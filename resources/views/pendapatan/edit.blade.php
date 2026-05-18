@@ -2,14 +2,33 @@
 
     <div class="container py-4">
 
-        <h2 class="mb-4">
-            Edit Data Pendapatan
-        </h2>
+        <!-- ========================= -->
+        <!-- HEADER -->
+        <!-- ========================= -->
 
-        <!-- Error validasi -->
+        <div class="mb-4">
+
+            <h2 class="fw-bold mb-1">
+
+                Edit Data Pendapatan
+
+            </h2>
+
+            <p class="text-muted mb-0">
+
+                Perbarui data monitoring pendapatan mitra kerja
+
+            </p>
+
+        </div>
+
+        <!-- ========================= -->
+        <!-- VALIDATION ERROR -->
+        <!-- ========================= -->
+
         @if ($errors->any())
 
-            <div class="alert alert-danger">
+            <div class="alert alert-danger border-0 shadow-sm rounded-4">
 
                 <ul class="mb-0">
 
@@ -25,145 +44,202 @@
 
         @endif
 
-        <!-- Form edit -->
-        <form action="{{ route('pendapatan.update', $pendapatan->id) }}"
-              method="POST">
+        <!-- ========================= -->
+        <!-- FORM CARD -->
+        <!-- ========================= -->
 
-            @csrf
-            @method('PUT')
+        <div class="card border-0 shadow-sm rounded-4">
 
-            <!-- Mitra -->
-            <div class="mb-3">
+            <div class="card-body p-4">
 
-                <label class="form-label">
-                    Mitra Kerja
-                </label>
+                <!-- Form edit -->
+                <form action="{{ route('pendapatan.update', $pendapatan->id) }}"
+                      method="POST">
 
-                <select name="mitra_id"
-                        class="form-control">
+                    @csrf
+                    @method('PUT')
 
-                    @foreach($mitra as $item)
+                    <!-- ========================= -->
+                    <!-- GRID FORM -->
+                    <!-- ========================= -->
 
-                        <option value="{{ $item->id }}"
-                            {{ $pendapatan->mitra_id == $item->id ? 'selected' : '' }}>
+                    <div class="row">
 
-                            {{ $item->nama_mitra }}
+                        <!-- Mitra -->
+                        <div class="col-md-6 mb-4">
 
-                        </option>
+                            <label class="form-label fw-semibold">
 
-                    @endforeach
+                                Mitra Kerja
 
-                </select>
+                            </label>
+
+                            <select name="mitra_id"
+                                    class="form-select rounded-3">
+
+                                @foreach($mitra as $item)
+
+                                    <option value="{{ $item->id }}"
+                                        {{ $pendapatan->mitra_id == $item->id ? 'selected' : '' }}>
+
+                                        {{ $item->nama_mitra }}
+
+                                    </option>
+
+                                @endforeach
+
+                            </select>
+
+                        </div>
+
+                        <!-- Tahun -->
+                        <div class="col-md-6 mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                Tahun Anggaran
+
+                            </label>
+
+                            <select name="tahun_id"
+                                    class="form-select rounded-3">
+
+                                @foreach($tahun as $item)
+
+                                    <option value="{{ $item->id }}"
+                                        {{ $pendapatan->tahun_id == $item->id ? 'selected' : '' }}>
+
+                                        {{ $item->tahun }}
+
+                                    </option>
+
+                                @endforeach
+
+                            </select>
+
+                        </div>
+
+                        <!-- Target -->
+                        <div class="col-md-6 mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                Target Pendapatan
+
+                            </label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-text">
+                                    Rp
+                                </span>
+
+                                <input type="number"
+                                       name="target"
+                                       class="form-control rounded-end-3"
+                                       value="{{ $pendapatan->target }}">
+
+                            </div>
+
+                        </div>
+
+                        <!-- Realisasi -->
+                        <div class="col-md-6 mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                Realisasi Pendapatan
+
+                            </label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-text">
+                                    Rp
+                                </span>
+
+                                <input type="number"
+                                       name="realisasi"
+                                       class="form-control rounded-end-3"
+                                       value="{{ $pendapatan->realisasi }}">
+
+                            </div>
+
+                        </div>
+
+                        <!-- Kondisi -->
+                        <div class="col-md-12 mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                Kondisi Lingkungan
+
+                            </label>
+
+                            <select name="kondisi_id"
+                                    class="form-select rounded-3">
+
+                                @foreach($kondisi as $item)
+
+                                    <option value="{{ $item->id }}"
+                                        {{ $pendapatan->kondisi_id == $item->id ? 'selected' : '' }}>
+
+                                        {{ $item->nama_kondisi }}
+
+                                    </option>
+
+                                @endforeach
+
+                            </select>
+
+                        </div>
+
+                        <!-- Catatan -->
+                        <div class="col-md-12 mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                Catatan
+
+                            </label>
+
+                            <textarea name="catatan"
+                                      rows="5"
+                                      class="form-control rounded-3">{{ $pendapatan->catatan }}</textarea>
+
+                        </div>
+
+                    </div>
+
+                    <!-- ========================= -->
+                    <!-- BUTTON -->
+                    <!-- ========================= -->
+
+                    <div class="d-flex gap-2">
+
+                        <button type="submit"
+                                class="btn btn-primary rounded-3 px-4">
+
+                            <i class="bi bi-save me-1"></i>
+
+                            Update
+
+                        </button>
+
+                        <a href="{{ route('pendapatan.index') }}"
+                           class="btn btn-secondary rounded-3 px-4">
+
+                            Kembali
+
+                        </a>
+
+                    </div>
+
+                </form>
 
             </div>
 
-            <!-- Tahun -->
-            <div class="mb-3">
-
-                <label class="form-label">
-                    Tahun Anggaran
-                </label>
-
-                <select name="tahun_id"
-                        class="form-control">
-
-                    @foreach($tahun as $item)
-
-                        <option value="{{ $item->id }}"
-                            {{ $pendapatan->tahun_id == $item->id ? 'selected' : '' }}>
-
-                            {{ $item->tahun }}
-
-                        </option>
-
-                    @endforeach
-
-                </select>
-
-            </div>
-
-            <!-- Target -->
-            <div class="mb-3">
-
-                <label class="form-label">
-                    Target Pendapatan
-                </label>
-
-                <input type="number"
-                       name="target"
-                       class="form-control"
-                       value="{{ $pendapatan->target }}">
-
-            </div>
-
-            <!-- Realisasi -->
-            <div class="mb-3">
-
-                <label class="form-label">
-                    Realisasi Pendapatan
-                </label>
-
-                <input type="number"
-                       name="realisasi"
-                       class="form-control"
-                       value="{{ $pendapatan->realisasi }}">
-
-            </div>
-
-            <!-- Kondisi -->
-            <div class="mb-3">
-
-                <label class="form-label">
-                    Kondisi Lingkungan
-                </label>
-
-                <select name="kondisi_id"
-                        class="form-control">
-
-                    @foreach($kondisi as $item)
-
-                        <option value="{{ $item->id }}"
-                            {{ $pendapatan->kondisi_id == $item->id ? 'selected' : '' }}>
-
-                            {{ $item->nama_kondisi }}
-
-                        </option>
-
-                    @endforeach
-
-                </select>
-
-            </div>
-
-            <!-- Catatan -->
-            <div class="mb-3">
-
-                <label class="form-label">
-                    Catatan
-                </label>
-
-                <textarea name="catatan"
-                          rows="4"
-                          class="form-control">{{ $pendapatan->catatan }}</textarea>
-
-            </div>
-
-            <!-- Tombol -->
-            <button type="submit"
-                    class="btn btn-primary">
-
-                Update
-
-            </button>
-
-            <a href="{{ route('pendapatan.index') }}"
-               class="btn btn-secondary">
-
-                Kembali
-
-            </a>
-
-        </form>
+        </div>
 
     </div>
 
