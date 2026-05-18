@@ -157,23 +157,99 @@
                                         </a>
 
                                         <!-- Delete -->
-                                        <form action="{{ route('users.destroy', $user->id) }}"
-                                              method="POST"
-                                              class="d-inline">
+                                        <!-- Tombol buka modal -->
+                                        <button type="button"
+                                                class="btn btn-danger btn-sm rounded-3"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#hapusUser{{ $user->id }}">
 
-                                            @csrf
-                                            @method('DELETE')
+                                            <i class="bi bi-trash"></i>
 
-                                            <button type="submit"
-                                                    class="btn btn-danger btn-sm rounded-3">
+                                            Hapus
 
-                                                <i class="bi bi-trash"></i>
+                                        </button>
 
-                                                Hapus
+                                        <!-- ========================= -->
+                                        <!-- MODAL DELETE -->
+                                        <!-- ========================= -->
 
-                                            </button>
+                                        <div class="modal fade"
+                                            id="hapusUser{{ $user->id }}"
+                                            tabindex="-1"
+                                            aria-hidden="true">
 
-                                        </form>
+                                            <div class="modal-dialog modal-dialog-centered">
+
+                                                <div class="modal-content border-0 rounded-4">
+
+                                                    <!-- Header -->
+                                                    <div class="modal-header border-0">
+
+                                                        <h5 class="modal-title fw-bold text-danger">
+
+                                                            <i class="bi bi-exclamation-triangle-fill"></i>
+
+                                                            Konfirmasi Hapus
+
+                                                        </h5>
+
+                                                        <!-- Tombol close -->
+                                                        <button type="button"
+                                                                class="btn-close"
+                                                                data-bs-dismiss="modal">
+
+                                                        </button>
+
+                                                    </div>
+
+                                                    <!-- Body -->
+                                                    <div class="modal-body">
+
+                                                        Apakah Anda yakin ingin menghapus user:
+
+                                                        <strong>
+
+                                                            {{ $user->name }}
+
+                                                        </strong> ?
+
+                                                    </div>
+
+                                                    <!-- Footer -->
+                                                    <div class="modal-footer border-0">
+
+                                                        <!-- Tombol batal -->
+                                                        <button type="button"
+                                                                class="btn btn-secondary rounded-3"
+                                                                data-bs-dismiss="modal">
+
+                                                            Batal
+
+                                                        </button>
+
+                                                        <!-- Form delete -->
+                                                        <form action="{{ route('users.destroy', $user->id) }}"
+                                                            method="POST">
+
+                                                            @csrf
+                                                            @method('DELETE')
+
+                                                            <button type="submit"
+                                                                    class="btn btn-danger rounded-3">
+
+                                                                Ya, Hapus
+
+                                                            </button>
+
+                                                        </form>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
 
                                     </td>
 
