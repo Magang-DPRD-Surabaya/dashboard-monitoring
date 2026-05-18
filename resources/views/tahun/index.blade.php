@@ -2,93 +2,178 @@
 
     <div class="container py-4">
 
-        <!-- Judul halaman -->
-        <h2 class="mb-4">Data Tahun Anggaran</h2>
+        <!-- ========================= -->
+        <!-- HEADER -->
+        <!-- ========================= -->
 
-        <!-- Tombol tambah -->
-        <a href="{{ route('tahun-anggaran.create') }}"
-           class="btn btn-primary mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-4">
 
-            Tambah Tahun
+            <div>
 
-        </a>
+                <!-- Judul -->
+                <h2 class="fw-bold mb-1">
 
-        <!-- Alert sukses -->
+                    Data Tahun Anggaran
+
+                </h2>
+
+                <!-- Subjudul -->
+                <p class="text-muted mb-0">
+
+                    Kelola data tahun anggaran monitoring pendapatan
+
+                </p>
+
+            </div>
+
+            <!-- Tombol tambah -->
+            <a href="{{ route('tahun-anggaran.create') }}"
+               class="btn btn-primary rounded-3 px-4 shadow-sm">
+
+                <i class="bi bi-plus-circle me-1"></i>
+
+                Tambah Tahun
+
+            </a>
+
+        </div>
+
+        <!-- ========================= -->
+        <!-- ALERT -->
+        <!-- ========================= -->
+
         @if(session('success'))
 
-            <div class="alert alert-success">
+            <div class="alert alert-success border-0 shadow-sm rounded-4">
+
+                <i class="bi bi-check-circle-fill me-2"></i>
+
                 {{ session('success') }}
+
             </div>
 
         @endif
 
-        <!-- Tabel -->
-        <table class="table table-bordered">
+        <!-- ========================= -->
+        <!-- TABLE CARD -->
+        <!-- ========================= -->
 
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Tahun</th>
-                    <th width="200">Aksi</th>
-                </tr>
-            </thead>
+        <div class="card border-0 shadow-sm rounded-4">
 
-            <tbody>
+            <div class="card-body">
 
-                @forelse($tahun as $item)
+                <div class="table-responsive">
 
-                    <tr>
+                    <table class="table align-middle table-hover">
 
-                        <td>{{ $loop->iteration }}</td>
+                        <!-- Header tabel -->
+                        <thead class="table-light">
 
-                        <td>{{ $item->tahun }}</td>
+                            <tr>
 
-                        <td>
+                                <th>No</th>
 
-                            <!-- Tombol edit -->
-                            <a href="{{ route('tahun-anggaran.edit', $item->id) }}"
-                               class="btn btn-warning btn-sm">
+                                <th>Tahun Anggaran</th>
 
-                                Edit
+                                <th width="200">
+                                    Aksi
+                                </th>
 
-                            </a>
+                            </tr>
 
-                            <!-- Form hapus -->
-                            <form action="{{ route('tahun-anggaran.destroy', $item->id) }}"
-                                  method="POST"
-                                  class="d-inline">
+                        </thead>
 
-                                @csrf
-                                @method('DELETE')
+                        <tbody>
 
-                                <button type="submit"
-                                        class="btn btn-danger btn-sm">
+                            @forelse($tahun as $item)
 
-                                    Hapus
+                                <tr>
 
-                                </button>
+                                    <!-- Nomor -->
+                                    <td>
 
-                            </form>
+                                        {{ $loop->iteration }}
 
-                        </td>
+                                    </td>
 
-                    </tr>
+                                    <!-- Tahun -->
+                                    <td>
 
-                @empty
+                                        <span class="badge bg-primary rounded-pill px-3 py-2">
 
-                    <tr>
+                                            {{ $item->tahun }}
 
-                        <td colspan="3" class="text-center">
-                            Data belum tersedia
-                        </td>
+                                        </span>
 
-                    </tr>
+                                    </td>
 
-                @endforelse
+                                    <!-- Aksi -->
+                                    <td>
 
-            </tbody>
+                                        <!-- Tombol edit -->
+                                        <a href="{{ route('tahun-anggaran.edit', $item->id) }}"
+                                           class="btn btn-warning btn-sm rounded-3">
 
-        </table>
+                                            <i class="bi bi-pencil-square"></i>
+
+                                            Edit
+
+                                        </a>
+
+                                        <!-- Form hapus -->
+                                        <form action="{{ route('tahun-anggaran.destroy', $item->id) }}"
+                                              method="POST"
+                                              class="d-inline">
+
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="submit"
+                                                    class="btn btn-danger btn-sm rounded-3">
+
+                                                <i class="bi bi-trash"></i>
+
+                                                Hapus
+
+                                            </button>
+
+                                        </form>
+
+                                    </td>
+
+                                </tr>
+
+                            @empty
+
+                                <!-- Empty state -->
+                                <tr>
+
+                                    <td colspan="3"
+                                        class="text-center py-5">
+
+                                        <i class="bi bi-calendar-x fs-1 text-muted"></i>
+
+                                        <p class="text-muted mt-3 mb-0">
+
+                                            Data tahun anggaran belum tersedia
+
+                                        </p>
+
+                                    </td>
+
+                                </tr>
+
+                            @endforelse
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
