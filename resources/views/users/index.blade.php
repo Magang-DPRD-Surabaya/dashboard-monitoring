@@ -6,7 +6,12 @@
         <!-- HEADER -->
         <!-- ========================= -->
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex flex-column flex-md-row
+            justify-content-between
+            align-items-start
+            align-items-md-center
+            gap-3
+            mb-4">
 
             <div>
 
@@ -145,6 +150,7 @@
 
                                     <!-- Tombol aksi -->
                                     <td>
+                                        <div class="d-flex flex-wrap gap-2">
 
                                         <!-- Edit -->
                                         <a href="{{ route('users.edit', $user->id) }}"
@@ -251,6 +257,8 @@
 
                                         </div>
 
+                                        </div>
+                                        
                                     </td>
 
                                 </tr>
