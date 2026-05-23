@@ -80,14 +80,18 @@ class PendapatanController extends Controller
         $request->validate([
             'mitra_id' => 'required',
             'tahun_id' => 'required|unique:pendapatan,tahun_id,NULL,id,mitra_id,' . $request->mitra_id,
-            'target' => 'required|numeric',
-            'realisasi' => 'required|numeric',
+            'pemodalan' => 'required|numeric|min:0',
+            'dividen' => 'required|numeric|min:0',
+            'target' => 'required|numeric|min:0',
+            'realisasi' => 'required|numeric|min:0',
             'kondisi_id' => 'required',
             'catatan' => 'nullable'
         ]);
 
         // Hitung persentase
-        $persentase = ($request->realisasi / $request->target) * 100;
+        $persentase = $request->target > 0
+            ? ($request->realisasi / $request->target) * 100
+            : 0;
 
         /**
          * Menentukan status otomatis
@@ -130,12 +134,16 @@ class PendapatanController extends Controller
             // User login yang input data
             'created_by' => auth()->id(),
 
+            'pemodalan' => $request->pemodalan,
+
             // Data pendapatan
             'target' => $request->target,
             'realisasi' => $request->realisasi,
 
             // Persentase otomatis
             'persentase' => $persentase,
+
+            'dividen' => $request->dividen,
 
             // Status otomatis
             'status_id' => $statusId,
@@ -197,14 +205,18 @@ class PendapatanController extends Controller
                 $pendapatan->id .
                  ',id,mitra_id,' .
                 $request->mitra_id,
-            'target' => 'required|numeric',
-            'realisasi' => 'required|numeric',
+            'pemodalan' => 'required|numeric|min:0',
+            'target' => 'required|numeric|min:0',
+            'realisasi' => 'required|numeric|min:0',
+            'dividen' => 'required|numeric|min:0',
             'kondisi_id' => 'required',
             'catatan' => 'nullable'
         ]);
 
         // Hitung persentase ulang
-        $persentase = ($request->realisasi / $request->target) * 100;
+        $persentase = $request->target > 0
+            ? ($request->realisasi / $request->target) * 100
+            : 0;
 
         /**
          * Status otomatis
@@ -236,16 +248,13 @@ class PendapatanController extends Controller
 
             'mitra_id' => $request->mitra_id,
             'tahun_id' => $request->tahun_id,
-
+            'pemodalan' => $request->pemodalan,
             'target' => $request->target,
             'realisasi' => $request->realisasi,
-
             'persentase' => $persentase,
-
+            'dividen' => $request->dividen,
             'status_id' => $statusId,
-
             'kondisi_id' => $request->kondisi_id,
-
             'catatan' => $request->catatan,
         ]);
 

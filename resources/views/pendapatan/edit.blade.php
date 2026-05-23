@@ -119,6 +119,58 @@
 
                         </div>
 
+                        <!-- Pemodalan -->
+                        <div class="col-md-6 mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                Pemodalan
+
+                            </label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-text">
+                                    Rp
+                                </span>
+
+                                <input type="number"
+                                    name="pemodalan"
+                                    class="form-control rounded-end-3"
+                                    value="{{ $pendapatan->pemodalan }}"
+                                    min="0"
+                                    required>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Dividen -->
+                        <div class="col-md-6 mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                Dividen
+
+                            </label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-text">
+                                    Rp
+                                </span>
+
+                                <input type="number"
+                                    name="dividen"
+                                    class="form-control rounded-end-3"
+                                    value="{{ $pendapatan->dividen }}"
+                                    min="0"
+                                    required>
+
+                            </div>
+
+                        </div>
+
                         <!-- Target -->
                         <div class="col-md-6 mb-4">
 
