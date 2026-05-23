@@ -26,10 +26,16 @@ return new class extends Migration
                 ->constrained('users')
                 ->cascadeOnDelete();
 
+            $table->bigInteger('pemodalan')
+                ->default(0);
+
             $table->decimal('target', 15, 2);
             $table->decimal('realisasi', 15, 2);
 
             $table->decimal('persentase', 5, 2);
+
+            $table->bigInteger('dividen')
+                ->default(0);
 
             $table->foreignId('status_id')
                 ->constrained('status_capaian');
