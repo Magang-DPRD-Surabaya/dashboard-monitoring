@@ -12,9 +12,11 @@ class Pendapatan extends Model
         'mitra_id',
         'tahun_id',
         'created_by',
+        'pemodalan',
         'target',
         'realisasi',
         'persentase',
+        'dividen',
         'status_id',
         'kondisi_id',
         'catatan'
