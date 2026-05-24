@@ -17,7 +17,10 @@ class PendapatanController extends Controller
      */
     public function index(Request $request){
         //Ambil keyword pencarian
-        $search = $request->search;
+        $mitraId = $request->mitra_id;
+
+        // Ambil filter tahun
+        $tahunId = $request->tahun_id;
 
         // Ambil data beserta relasi
         $pendapatan = Pendapatan::with([
@@ -29,28 +32,25 @@ class PendapatanController extends Controller
 
         ])
 
-        ->when($search, function ($query) use ($search) {
+        ->when($mitraId, function ($query) use ($mitraId) {
+            $query->where('mitra_id', $mitraId);
+        })
 
-            $query->whereHas('mitra', function ($q) use ($search) {
-
-                $q->where(
-                    'nama_mitra',
-                    'like',
-                    '%' . $search . '%'
-                );
-
-            });
-
+        ->when($tahunId, function ($query) use ($tahunId) {
+            $query->where('tahun_id', $tahunId);
         })
 
         ->latest()
 
         ->paginate(10);
 
+        $mitraList = MitraKerja::all();
+        $tahunList = TahunAnggaran::all();
+
         // Tampilkan view
         return view(
             'pendapatan.index',
-            compact('pendapatan')
+            compact('pendapatan', 'mitraList', 'tahunList')
         );
     }
     
