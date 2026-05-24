@@ -47,14 +47,20 @@ class LaporanController extends Controller
         $pendapatan = $query->get();
 
         /**
-         * Total target
+         * Total pemodalan
          */
-        $totalTarget = $query->sum('target');
+        $totalPemodalan = $query->sum('pemodalan');
 
         /**
          * Total realisasi
          */
         $totalRealisasi = $query->sum('realisasi');
+
+        /**
+         * Total dividen
+         */
+        $totalDividen = $query->sum('dividen');
+
 
         /**
          * Ambil data tahun
@@ -66,8 +72,9 @@ class LaporanController extends Controller
          */
         $pdf = Pdf::loadView('laporan.pdf', compact(
             'pendapatan',
-            'totalTarget',
+            'totalPemodalan',
             'totalRealisasi',
+            'totalDividen',
             'tahun'
         ));
 

@@ -53,40 +53,32 @@
 
     <!-- Tahun -->
     <p>
-
         Tahun Anggaran:
-
         <strong>
-
             {{ $tahun ? $tahun->tahun : 'Semua Tahun' }}
-
         </strong>
-
     </p>
 
     <!-- Total -->
     <p>
-
-        Total Target:
-
+        Total Pemodalan:
         <strong>
-
-            Rp {{ number_format($totalTarget, 0, ',', '.') }}
-
+            Rp {{ number_format($totalPemodalan, 0, ',', '.') }}
         </strong>
-
     </p>
 
     <p>
-
         Total Realisasi:
-
         <strong>
-
             Rp {{ number_format($totalRealisasi, 0, ',', '.') }}
-
         </strong>
+    </p>
 
+    <p>
+        Total Dividen:
+        <strong>
+            Rp {{ number_format($totalDividen, 0, ',', '.') }}
+        </strong>
     </p>
 
     <!-- Tabel -->
@@ -95,21 +87,14 @@
         <thead>
 
             <tr>
-
                 <th>No</th>
-
                 <th>Mitra</th>
-
                 <th>Tahun</th>
-
-                <th>Target</th>
-
+                <th>Pemodalan</th>
                 <th>Realisasi</th>
-
                 <th>Persentase</th>
-
+                <th>Dividen</th>
                 <th>Status</th>
-
             </tr>
 
         </thead>
@@ -127,27 +112,23 @@
                     <td>{{ $item->tahun->tahun }}</td>
 
                     <td>
-
-                        Rp {{ number_format($item->target, 0, ',', '.') }}
-
+                        Rp {{ number_format($item->pemodalan, 0, ',', '.') }}
                     </td>
 
                     <td>
-
                         Rp {{ number_format($item->realisasi, 0, ',', '.') }}
-
                     </td>
 
                     <td>
-
                         {{ number_format($item->persentase, 2) }}%
-
                     </td>
 
                     <td>
+                        Rp {{ number_format($item->dividen, 0, ',', '.') }}
+                    </td>
 
+                    <td>
                         {{ $item->status->nama_status }}
-
                     </td>
 
                 </tr>

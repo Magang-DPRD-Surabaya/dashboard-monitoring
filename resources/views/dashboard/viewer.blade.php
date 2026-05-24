@@ -71,7 +71,7 @@
                             </label>
 
                             <select name="tahun_id"
-                                    class="form-control">
+                                    class="form-select rounded-3">
 
                                 <option value="">
                                     Semua Tahun
@@ -80,7 +80,7 @@
                                 @foreach($tahunList as $tahun)
 
                                     <option value="{{ $tahun->id }}"
-                                        {{ $tahunId == $tahun->id ? 'selected' : '' }}>
+                                        @selected($tahunId == $tahun->id)>
 
                                         {{ $tahun->tahun }}
 
@@ -126,7 +126,7 @@
         <div class="row mb-4">
 
             <!-- Total Mitra -->
-            <div class="col-md-4">
+            <div class="col-md-3">
 
                 <div class="card border-0 shadow-sm rounded-4">
 
@@ -164,10 +164,10 @@
 
             </div>
 
-            <!-- Total Target -->
-            <div class="col-md-4">
+            <!-- Total Pemodalan -->
+            <div class="col-md-3">
 
-                <div class="card border-0 shadow-sm rounded-4">
+                <div class="card border-0 shadow-sm rounded-4 h-100">
 
                     <div class="card-body">
 
@@ -177,21 +177,21 @@
 
                                 <p class="text-muted mb-1">
 
-                                    Total Target
+                                    Total Pemodalan
 
                                 </p>
 
-                                <h4 class="fw-bold">
+                                <h4 class="fw-bold mb-0">
 
-                                    Rp {{ number_format($totalTarget,0,',','.') }}
+                                    Rp {{ number_format($totalPemodalan, 0, ',', '.') }}
 
                                 </h4>
 
                             </div>
 
-                            <div class="bg-success bg-opacity-10 p-3 rounded-circle">
+                            <div class="bg-primary bg-opacity-10 p-3 rounded-circle">
 
-                                <i class="bi bi-cash-stack text-success fs-3"></i>
+                                <i class="bi bi-bank2 text-primary fs-4"></i>
 
                             </div>
 
@@ -204,7 +204,7 @@
             </div>
 
             <!-- Total Realisasi -->
-            <div class="col-md-4">
+            <div class="col-md-3">
 
                 <div class="card border-0 shadow-sm rounded-4">
 
@@ -242,6 +242,45 @@
 
             </div>
 
+            <!-- Total Dividen -->
+            <div class="col-md-3">
+
+                <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <div>
+
+                                <p class="text-muted mb-1">
+
+                                    Total Dividen
+
+                                </p>
+
+                                <h4 class="fw-bold mb-0">
+
+                                    Rp {{ number_format($totalDividen, 0, ',', '.') }}
+
+                                </h4>
+
+                            </div>
+
+                            <div class="bg-warning bg-opacity-10 p-3 rounded-circle">
+
+                                <i class="bi bi-cash-stack text-warning fs-4"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
         <!-- Grafik -->
@@ -256,107 +295,18 @@
                 <canvas id="pendapatanChart"></canvas>
 
             </div>
-
         </div>
 
-        <!-- Ranking Mitra -->
+        <!-- Chart Dividen -->
         <div class="card border-0 shadow-sm rounded-4 mt-4">
 
-            <div class="card-body p-4">
+            <div class="card-body">
 
                 <h5 class="fw-bold mb-4">
-
-                    Ranking Mitra Berdasarkan Realisasi
-
+                    Dividen BUMD per Mitra
                 </h5>
 
-                <div class="table-responsive">
-
-                    <table class="table align-middle">
-
-                        <thead>
-
-                            <tr>
-
-                                <th>Ranking</th>
-
-                                <th>Mitra</th>
-
-                                <th>Realisasi</th>
-
-                                <th>Status</th>
-
-                            </tr>
-
-                        </thead>
-
-                        <tbody>
-
-                            @foreach($rankingMitra as $item)
-
-                                <tr>
-
-                                    <td>
-
-                                        <span class="badge bg-dark">
-
-                                            #{{ $loop->iteration }}
-
-                                        </span>
-
-                                    </td>
-
-                                    <td>
-
-                                        {{ $item->mitra->nama_mitra }}
-
-                                    </td>
-
-                                    <td>
-
-                                        Rp {{ number_format($item->realisasi,0,',','.') }}
-
-                                    </td>
-
-                                    <td>
-
-                                        @if($item->persentase >= 80)
-
-                                            <span class="badge bg-success">
-
-                                                Baik
-
-                                            </span>
-
-                                        @elseif($item->persentase >= 50)
-
-                                            <span class="badge bg-warning text-dark">
-
-                                                Perlu Perhatian
-
-                                            </span>
-
-                                        @else
-
-                                            <span class="badge bg-danger">
-
-                                                Perlu Evaluasi
-
-                                            </span>
-
-                                        @endif
-
-                                    </td>
-
-                                </tr>
-
-                            @endforeach
-
-                        </tbody>
-
-                    </table>
-
-                </div>
+                <canvas id="chartDividen"></canvas>
 
             </div>
 
@@ -445,6 +395,61 @@
 
                     y: {
                         beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        /**
+         * Chart dividen BUMD
+         */
+        const chartDividen = document.getElementById('chartDividen');
+
+        new Chart(chartDividen, {
+
+            type: 'bar',
+
+            data: {
+
+                labels: [
+
+                    @foreach($chartDividen as $item)
+
+                        '{{ $item->mitra->nama_mitra }}',
+
+                    @endforeach
+
+                ],
+
+                datasets: [{
+
+                    label: 'Dividen',
+
+                    data: [
+
+                        @foreach($chartDividen as $item)
+
+                            {{ $item->dividen }},
+
+                        @endforeach
+
+                    ],
+
+                    borderWidth: 1
+
+                }]
+            },
+
+            options: {
+
+                responsive: true,
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true
+
                     }
                 }
             }

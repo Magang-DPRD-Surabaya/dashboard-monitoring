@@ -43,9 +43,9 @@ class DashboardController extends Controller
         $totalMitra = MitraKerja::count();
 
         /**
-         * Total target
+         * Total pemodalan
          */
-        $totalTarget = (clone $query)->sum('target');
+        $totalPemodalan = (clone $query)->sum('pemodalan');
 
         /**
          * Total realisasi
@@ -53,19 +53,27 @@ class DashboardController extends Controller
         $totalRealisasi = (clone $query)->sum('realisasi');
 
         /**
-         * Ranking mitra
+         * Total dividen
          */
-        $rankingMitra = (clone $query)
-            ->with('mitra')
-            ->orderByDesc('realisasi')
-            ->take(5)
-            ->get();
+        $totalDividen = (clone $query)->sum('dividen');
 
         /**
          * Data chart
          */
         $chartData = (clone $query)
             ->with('mitra')
+            ->get();
+
+        /**
+         * Chart dividen khusus BUMD
+         */
+        $chartDividen = (clone $query)
+            ->whereHas('mitra', function ($q) {
+                $q->where('jenis', 'BUMD');
+            })
+
+            ->with('mitra')
+
             ->get();
 
         /**
@@ -77,10 +85,11 @@ class DashboardController extends Controller
                 'tahunList',
                 'tahunId',
                 'totalMitra',
-                'totalTarget',
+                'totalPemodalan',
                 'totalRealisasi',
-                'rankingMitra',
-                'chartData'
+                'totalDividen',
+                'chartData',
+                'chartDividen'
             ));
         }
 
@@ -91,10 +100,11 @@ class DashboardController extends Controller
             'tahunList',
             'tahunId',
             'totalMitra',
-            'totalTarget',
+            'totalPemodalan',
             'totalRealisasi',
-            'rankingMitra',
-            'chartData'
+            'totalDividen',
+            'chartData',
+            'chartDividen'
         ));
     }
 }
